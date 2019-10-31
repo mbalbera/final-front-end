@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image, Dimensions } from 'react-native';
 
 const data = [
-    { key: 1, value: '../assets/images/sport_images/baseball.png' }, { key: 2, value: '../assets/images/sport_images/basketball.png' }, { key: 3, value: '../assets/images/sport_images/boxer.png' }, { key: 4, value: '../assets/images/sport_images/football.png' }
-    // , { key:5, value: 'Golf' }, { key:6, value: 'hockey' }, { key:7, value: 'Movie' }, { key:8, value: 'soccer' }, { key:9, value: 'TV' }
+    { key: 1, img_path: '../assets/images/sport_images/baseball.png' }, { key: 2, img_path: '../assets/images/sport_images/basketball.png' }, { key: 3, img_path: '../assets/images/sport_images/boxer.png' }, { key: 4, img_path: '../assets/images/sport_images/football.png' }
+    , { key:5, img_path: 'Golf' }, { key:6, img_path: 'hockey' }, { key:7, img_path: 'Movie' }, { key:8, img_path: 'soccer' }, { key:9, img_path: 'TV' }
 ];
 
 const formatData = (data, numColumns) => {
@@ -26,8 +26,7 @@ export default class App extends React.Component {
         }
         return (
             <View style={styles.item}>
-                
-                <Image style={styles.pics} source={require(`../assets/images/sport_images/baseball.png`)} />
+                <Image style={styles.pics} source={require('../assets/images/sport_images/baseball.png')} />
             </View>
         );
     };
