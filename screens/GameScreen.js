@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     },
 
     mainContainer:{
-        paddingTop: 80,
+        top: 110,
         position: "absolute",
         alignSelf: 'center',
     },
@@ -77,12 +77,11 @@ const styles = StyleSheet.create({
     },
 
     gameContainer: {
-        height: 10,
         marginTop: 15,
         paddingTop: 25,
         paddingBottom: 25,
-        marginRight: 100,
-        position: "absolute"
+        right: 290,
+        position: 'absolute'
     },
 
 
