@@ -1,16 +1,14 @@
 import React from 'react'
-import GameCard from '../components/GameCard'
+import Swipe from '../components/Swiper'
+import OverlayLabel from '../components/OverlayLabel'
+import Card from '../components/Card'
+// import GameCard from '../components/GameCard'
 import DrawerIcon from '../components/DrawerIcon';
 import { Slider, Header } from 'react-native-elements';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ScrollView,Button } from 'react-native';
 
 function GameScreen(props){
-    const useSwiper = useRef(null).current
-    const handleOnSwipedLeft = () => useSwiper.swipeLeft()
-    const handleOnSwipedTop = () => useSwiper.swipeTop()
-    const handleOnSwipedRight = () => useSwiper.swipeRight()
-    const handleOnSwipedDown = () => useSwiper.swipeDown()
-    
+
     return(
         <View style={styles.container}>
             <Header style={styles.header}
@@ -36,7 +34,7 @@ function GameScreen(props){
                     </View>
                 </View>
                 <View style={styles.gameContainer}>
-                    <Swiper
+                    <Swipe
                         ref={useSwiper}
                         animateCardOpacity
                         containerStyle={styles.container}
