@@ -5,6 +5,12 @@ import { Slider, Header } from 'react-native-elements';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ScrollView,Button } from 'react-native';
 
 function GameScreen(props){
+    const useSwiper = useRef(null).current
+    const handleOnSwipedLeft = () => useSwiper.swipeLeft()
+    const handleOnSwipedTop = () => useSwiper.swipeTop()
+    const handleOnSwipedRight = () => useSwiper.swipeRight()
+    const handleOnSwipedDown = () => useSwiper.swipeDown()
+    
     return(
         <View style={styles.container}>
             <Header style={styles.header}
@@ -30,7 +36,39 @@ function GameScreen(props){
                     </View>
                 </View>
                 <View style={styles.gameContainer}>
-                    <GameCard style={styles.pic}/>
+                    <Swiper
+                        ref={useSwiper}
+                        animateCardOpacity
+                        containerStyle={styles.container}
+                        cards={photoCards}
+                        renderCard={card => <Card card={card} />}
+                        cardIndex={0}
+                        backgroundColor="white"
+                        stackSize={2}
+                        infinite
+                        showSecondCard
+                        animateOverlayLabelsOpacity
+                        overlayLabels={{
+                            left: {
+                                title: 'LEFT',
+                                element: <OverlayLabel label="LEFT" color="#E5566D" />,
+                                style: {
+                                    wrapper: styles.overlayWrapper,
+                                },
+                            },
+                            right: {
+                                title: 'RIGHT',
+                                element: <OverlayLabel label="RIGHT" color="#4CCC93" />,
+                                style: {
+                                    wrapper: {
+                                        ...styles.overlayWrapper,
+                                        alignItems: 'flex-start',
+                                        marginLeft: 30,
+                                    },
+                                },
+                            },
+                        }}
+                    />
                 </View>
             </View>
         </View>
