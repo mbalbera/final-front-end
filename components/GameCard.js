@@ -108,11 +108,11 @@ export default class GameCard extends React.Component {
                         {...this.PanResponder.panHandlers}
                         id={item.id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
                         <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
-                            <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>RIGHT</Text>
+                            <Text style={{ borderWidth: 1, borderColor: 'blue', color: 'blue', fontSize: 32, fontWeight: '800', padding: 10 }}>GIANTS</Text>
                         </Animated.View>
 
                         <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
-                            <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>LEFT</Text>
+                            <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>JETS</Text>
                         </Animated.View>
 
                         <Image
@@ -152,10 +152,14 @@ export default class GameCard extends React.Component {
 
     render() {
         return (
-            
+            // <View >
+            //     <View>
+            //         <Text style={{zIndex:30, paddingTop:180}}>Jets +4 (-130)  Giants -4 (+185)</Text>
+            //     </View>
                 <View style={{ flex: 1 }}>
                     {this.renderData()}
                 </View>
+            // </View>
                
         );
     }

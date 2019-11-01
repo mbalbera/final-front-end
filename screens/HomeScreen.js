@@ -1,38 +1,59 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import DrawerIcon from '../components/DrawerIcon';
-import {Header} from 'react-native-elements';
+import { Slider, Header } from 'react-native-elements';
 import { Button, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { DrawerActions } from 'react-navigation';
 import { MonoText } from '../components/StyledText';
 import Categories from '../components/Categories';
 import { white } from 'ansi-colors';
 
-export default function HomeScreen(props) {
-  return (
-    <View style={styles.container}>
+export default class HomeScreen extends React.Component {
+    state= {
+      sliderValue: 25
+    }
+
+  render(){
+
+    return (
+      <View style={styles.container}>
       <Header style={styles.header} 
         barStyle={'light-content'}
-        leftComponent={<DrawerIcon {...props}
-          // navigation={this.props.navigation} 
-          />}
+        leftComponent={<DrawerIcon {...this.props}
+        // navigation={this.this.props.navigation} 
+        />}
         rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
-      />
+        />
       <View style={styles.getStartedContainer}>
           <Text style={styles.appTitle}>MicroBets™</Text>
       </View>
+      <View style={styles.container}>
+        <Text style={styles.title}>{`Current Unit:`}</Text>
+          <Text style={styles.title}>{`$${Math.floor(this.state.sliderValue)}`}</Text>
+        <Slider
+          style={styles.slider}
+          thumbTintColor='white'
+          minimumValue={1}
+          maximumValue={50}
+          minimumTrackTintColor="white"
+          maximumTrackTintColor="black"
+          value={this.state.sliderValue}
+          onValueChange={sliderValue => this.setState({ sliderValue })}
+          />
+      </View>
         <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.contentContainer}>
+            // contentContainerStyle={styles.contentContainer}
+            >
             <Text style={styles.title}>Categories</Text>
-            <Categories {...props}/>
+            <Categories {...this.props}/>
           <View style={styles.buttonsContainer}>     
-              <Button onPress={()=>props.navigation.navigate('UserName')} title="Manage My Account"/>
-              <Button onPress={() => props.navigation.navigate('BetTracker')}title="Track Your Bets"/>
+              <Button onPress={()=>this.props.navigation.navigate('UserName')} title="Manage My Account"/>
+              <Button onPress={() => this.props.navigation.navigate('BetTracker')}title="Track Your Bets"/>
           </View>
       </ScrollView>
     </View>
   );
+}
 }
 
 HomeScreen.navigationOptions = {
@@ -47,6 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgb(53, 60, 80)',
+    alignContent: "center"
   },
   
   getStartedContainer: {
@@ -74,7 +96,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingBottom: 50
   },
   button: {
     backgroundColor: 'transparent',
@@ -91,6 +112,13 @@ const styles = StyleSheet.create({
   },
   header:{
     backgroundColor: 'rgb(10,106,250)'
+  },
+  slider: {
+    width: 200,
+    height: 40,
+    alignContent: 'center',
+    zIndex: 30,
+
   },
   appTitle:{
     fontSize: 36,

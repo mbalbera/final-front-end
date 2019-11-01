@@ -15,6 +15,9 @@ function GameScreen(props){
                 rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
             />
             <View style={styles.mainContainer}>
+                <View style={styles.gameContainer}>
+                    <GameCard style={styles.pic}/>
+                </View>
                 <View style={styles.midContainer}>
                     <View style={styles.container}>
                         <Text style={styles.title}>Confidence Meter</Text>
@@ -28,9 +31,6 @@ function GameScreen(props){
                             value={2.5}
                             />
                     </View>
-                </View>
-                <View style={styles.gameContainer}>
-                    <GameCard style={styles.pic}/>
                 </View>
             </View>
         </View>
