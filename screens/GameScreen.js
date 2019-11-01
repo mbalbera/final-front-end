@@ -1,174 +1,126 @@
 import React from 'react'
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
+import GameCard from '../components/GameCard'
+import DrawerIcon from '../components/DrawerIcon';
+import { Slider, Header } from 'react-native-elements';
+import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ScrollView,Button } from 'react-native';
 
-const SCREEN_HEIGHT = Dimensions.get('window').height
-const SCREEN_WIDTH = Dimensions.get('window').width
-const Data = [
-    { key: 1, img_path: '../assets/images/sport_images/baseball.png' }, { key: 2, img_path: '../assets/images/sport_images/basketball.png' }, { key: 3, img_path: '../assets/images/sport_images/boxer.png' }, { key: 4, img_path: '../assets/images/sport_images/football.png' }
-    , { key: 5, img_path: 'Golf' }, { key: 6, img_path: 'hockey' }, { key: 7, img_path: 'Movie' }, { key: 8, img_path: 'soccer' }, { key: 9, img_path: 'TV' }
-];
-
-export default class App extends React.Component {
-
-    constructor() {
-        super()
-
-        this.position = new Animated.ValueXY()
-        this.state = {
-            currentIndex: 0
-        }
-
-        this.rotate = this.position.x.interpolate({
-            inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-            outputRange: ['-30deg', '0deg', '10deg'],
-            extrapolate: 'clamp'
-        })
-
-        this.rotateAndTranslate = {
-            transform: [{
-                rotate: this.rotate
-            },
-            ...this.position.getTranslateTransform()
-            ]
-        }
-
-        this.likeOpacity = this.position.x.interpolate({
-            inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-            outputRange: [0, 0, 1],
-            extrapolate: 'clamp'
-        })
-        this.dislikeOpacity = this.position.x.interpolate({
-            inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-            outputRange: [1, 0, 0],
-            extrapolate: 'clamp'
-        })
-
-        this.nextCardOpacity = this.position.x.interpolate({
-            inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-            outputRange: [1, 0, 1],
-            extrapolate: 'clamp'
-        })
-        this.nextCardScale = this.position.x.interpolate({
-            inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
-            outputRange: [1, 0.8, 1],
-            extrapolate: 'clamp'
-        })
-
-    }
-    componentWillMount() {
-        this.PanResponder = PanResponder.create({
-
-            onStartShouldSetPanResponder: (evt, gestureState) => true,
-            onPanResponderMove: (evt, gestureState) => {
-
-                this.position.setValue({ x: gestureState.dx, y: gestureState.dy })
-            },
-            onPanResponderRelease: (evt, gestureState) => {
-
-                if (gestureState.dx > 120) {
-                    Animated.spring(this.position, {
-                        toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
-                    }).start(() => {
-                        this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
-                            this.position.setValue({ x: 0, y: 0 })
-                        })
-                    })
-                }
-                else if (gestureState.dx < -120) {
-                    Animated.spring(this.position, {
-                        toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
-                    }).start(() => {
-                        this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
-                            this.position.setValue({ x: 0, y: 0 })
-                        })
-                    })
-                }
-                else {
-                    Animated.spring(this.position, {
-                        toValue: { x: 0, y: 0 },
-                        friction: 4
-                    }).start()
-                }
-            }
-        })
-    }
-
-    renderData = () => {
-
-        return Data.map((item, i) => {
-
-
-            if (i < this.state.currentIndex) {
-                return null
-            }
-            else if (i == this.state.currentIndex) {
-
-                return (
-                    <Animated.View
-                        {...this.PanResponder.panHandlers}
-                        key={item.id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
-                        <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
-                            <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
-
-                        </Animated.View>
-
-                        <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
-                            <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
-
-                        </Animated.View>
-
-                        <Image
-                            style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
-                            source={item.uri} />
-
-                    </Animated.View>
-                )
-            }
-            else {
-                return (
-                    <Animated.View
-
-                        key={item.id} style={[{
-                            opacity: this.nextCardOpacity,
-                            transform: [{ scale: this.nextCardScale }],
-                            height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
-                        }]}>
-                        <Animated.View style={{ opacity: 0, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
-                            <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>LIKE</Text>
-
-                        </Animated.View>
-
-                        <Animated.View style={{ opacity: 0, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
-                            <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>NOPE</Text>
-
-                        </Animated.View>
-
-                        <Image
-                            style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 20 }}
-                            source={item.uri} />
-
-                    </Animated.View>
-                )
-            }
-        }).reverse()
-    }
-
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                <View style={{ height: 60 }}>
-
+function GameScreen(props){
+    return(
+        <View style={styles.container}>
+            <Header style={styles.header}
+                barStyle={'light-content'}
+                leftComponent={<DrawerIcon
+                // navigation={this.props.navigation}
+                />}
+                rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
+            />
+            <View style={styles.mainContainer}>
+                <View style={styles.midContainer}>
+                    <View style={styles.container}>
+                        <Text style={styles.title}>Confidence Meter</Text>
+                        <Slider
+                            style={styles.slider}
+                            thumbTintColor='white'
+                            minimumValue={0}
+                            maximumValue={5}
+                            minimumTrackTintColor="white"
+                            maximumTrackTintColor="black"
+                            value={2.5}
+                            />
+                    </View>
                 </View>
-                <View style={{ flex: 1 }}>
-                    {this.renderData()}
+                <View style={styles.gameContainer}>
+                    <GameCard style={styles.pic}/>
                 </View>
-                <View style={{ height: 60 }}>
-
-                </View>
-
-
             </View>
-
-        );
-    }
+        </View>
+    );
 }
+
+GameScreen.navigationOptions = {
+    header: null,
+    title: 'Home',
+    left: <DrawerIcon />
+};
+
+export default GameScreen
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'rgb(53, 60, 80)',
+    },
+
+    mainContainer:{
+        paddingTop: 80,
+        position: "absolute",
+        alignSelf: 'center',
+    },
+
+    pic: {
+        zIndex:99,
+        alignContent: 'center'
+
+    },
+
+    slider:{
+        width: 200, 
+        height: 40, 
+        alignContent: 'center'
+     
+    },
+    midContainer: {
+        marginTop: 15,
+        paddingTop: 25,
+        paddingBottom: 25,
+        alignItems: 'center',
+    },
+
+    gameContainer: {
+        height: 10,
+        marginTop: 15,
+        paddingTop: 25,
+        paddingBottom: 25,
+        marginRight: 100,
+        position: "absolute"
+    },
+
+
+    title: {
+        fontSize: 27,
+        color: 'rgb(225,225,225)',
+        lineHeight: 27,
+        textAlign: 'center',
+    },
+
+    tabBarInfoText: {
+        fontSize: 17,
+        color: 'rgba(96,100,109, 1)',
+        textAlign: 'center',
+    },
+    buttonsContainer: {
+        paddingTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        paddingBottom: 50
+    },
+    button: {
+        backgroundColor: 'transparent',
+        width: '40%',
+        height: 40
+    },
+    logo: {
+        height: 80,
+        resizeMode: "center"
+
+    },
+    funds: {
+        color: 'white'
+    },
+    header: {
+        backgroundColor: 'rgb(10,106,250)'
+    },
+    appTitle: {
+        fontSize: 36,
+    }
+});

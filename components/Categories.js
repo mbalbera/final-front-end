@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-elements';
 
 const data = [
-    { key: 1, img_path: '../assets/images/sport_images/baseball.png' }, { key: 2, img_path: '../assets/images/sport_images/basketball.png' }, { key: 3, img_path: '../assets/images/sport_images/boxer.png' }, { key: 4, img_path: '../assets/images/sport_images/football.png' }
-    , { key:5, img_path: 'Golf' }, { key:6, img_path: 'hockey' }, { key:7, img_path: 'Movie' }, { key:8, img_path: 'soccer' }, { key:9, img_path: 'TV' }
+    { key: 5, img_path: require('../assets/images/sport_images/Golf.png') }, { key: 2, img_path: require('../assets/images/sport_images/basketball.png') }, { key: 3, img_path: require('../assets/images/sport_images/boxer.png') }, { key: 4, img_path: require('../assets/images/sport_images/football.png') }
+    , { key: 1, img_path: require('../assets/images/sport_images/baseball.png') },  { key: 6, img_path: require('../assets/images/sport_images/hockey.png') }, { key: 8, img_path: require('../assets/images/sport_images/soccer.png') }, { key: 7, img_path: require('../assets/images/sport_images/horse.png') },  { key: 9, img_path: require('../assets/images/sport_images/TV.png') }
 ];
 
 const formatData = (data, numColumns) => {
@@ -19,22 +20,24 @@ const formatData = (data, numColumns) => {
 };
 
 const numColumns = 3;
-export default class App extends React.Component {
+function Categories(props){
+   
     renderItem = ({ item }) => {
-        if (item.empty === true) {
+        if (item.empty) {
+
             return <View style={[styles.item, styles.itemInvisible]} />;
         }
         return (
-            <View style={styles.item}>
-                <Image style={styles.pics} source={require('../assets/images/sport_images/baseball.png')} />
-            </View>
+            <TouchableOpacity style={styles.item} onPress={() => props.navigation.navigate('Game')}>
+                <Image
+                    style={styles.pics}
+                    source={item.img_path}
+                />
+            </TouchableOpacity>
         );
     };
-
-    render() {
         return (
             <View>
-                <Text style={styles.title}>Categories</Text>
                 <FlatList
                 data={formatData(data, numColumns)}
                 style={styles.container}
@@ -43,9 +46,9 @@ export default class App extends React.Component {
                 />
             </View>
         );
-    }
-}
 
+}
+export default Categories 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -73,6 +76,7 @@ const styles = StyleSheet.create({
     },
     pics:{
         height: 80,
+        width: 80,
         resizeMode: "center"
     }
 });

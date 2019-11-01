@@ -3,29 +3,32 @@ import React from 'react';
 import DrawerIcon from '../components/DrawerIcon';
 import {Header} from 'react-native-elements';
 import { Button, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import { DrawerActions } from 'react-navigation';
 import { MonoText } from '../components/StyledText';
 import Categories from '../components/Categories';
 import { white } from 'ansi-colors';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
   return (
     <View style={styles.container}>
-      <Header style={styles.header}
-          leftComponent={<DrawerIcon onPress={() => this.props.navigation.openDrawer()} />}
-          centerComponent={<Text style={styles.title}>Home</Text>}
-          rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
+      <Header style={styles.header} 
+        barStyle={'light-content'}
+        leftComponent={<DrawerIcon {...props}
+          // navigation={this.props.navigation} 
+          />}
+        rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
       />
       <View style={styles.getStartedContainer}>
-          <Image style={styles.logo} source={require('../assets/images/icon.png')} />
+          <Text style={styles.appTitle}>MicroBets™</Text>
       </View>
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.contentContainer}>
-            <Categories/>
+            <Text style={styles.title}>Categories</Text>
+            <Categories {...props}/>
           <View style={styles.buttonsContainer}>     
-              <Button title="Manage My Account"/>
-              <Button title="Track Your Bets"/>
+              <Button onPress={()=>props.navigation.navigate('UserName')} title="Manage My Account"/>
+              <Button onPress={() => props.navigation.navigate('BetTracker')}title="Track Your Bets"/>
           </View>
       </ScrollView>
     </View>
@@ -47,8 +50,9 @@ const styles = StyleSheet.create({
   },
   
   getStartedContainer: {
-    marginTop: 50,
-    paddingTop: 15,
+    marginTop: 15,
+    paddingTop: 25,
+    paddingBottom: 25,
     alignItems: 'center',
     marginHorizontal: 50,
   },
@@ -79,7 +83,7 @@ const styles = StyleSheet.create({
   },
   logo:{
     height: 80,
-        resizeMode: "center"
+    resizeMode: "center"
 
   },
   funds:{
@@ -87,6 +91,9 @@ const styles = StyleSheet.create({
   },
   header:{
     backgroundColor: 'rgb(10,106,250)'
+  },
+  appTitle:{
+    fontSize: 36,
   }
 });
 

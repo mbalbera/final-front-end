@@ -4,6 +4,7 @@ import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import DrawerIcon from '../components/DrawerIcon'
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import GameScreen from '../screens/GameScreen';
 import UsersScreen from '../screens/UsersScreen';
 import BetTrackerScreen from '../screens/BetTrackerScreen';
 import SettingsScreen from '../screens/SettingsScreen';
@@ -62,7 +63,7 @@ Home.navigationOptions = {
 
 Home.path = '';
 
-const BetTracker = createDrawerNavigator(
+const BetTracker = createStackNavigator(
   {
     BetTracker: BetTrackerScreen
   },
@@ -70,20 +71,22 @@ const BetTracker = createDrawerNavigator(
 );
 
 BetTracker.navigationOptions = {
-  navigationOptions: {
-    header: (props) => ({
-      left: DrawerIcon 
-    })
-  },
-  tabBarLabel: 'Links',
+  tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
   ),
 };
 
 BetTracker.path = '';
 
-const Rules = createDrawerNavigator(
+const Rules = createStackNavigator(
   {
     Rules: RulesScreen,
   },
@@ -91,15 +94,38 @@ const Rules = createDrawerNavigator(
 );
 
 Rules.navigationOptions = {
-  tabBarLabel: 'Rules',
+  tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
   ),
 };
 
 Rules.path = '';
 
-const Settings = createDrawerNavigator(
+const Game = createStackNavigator(
+  {
+    Game: GameScreen,
+  },
+  config
+);
+
+Game.navigationOptions = {
+  tabBarLabel: 'Home',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+  ),
+};
+
+Game.path = '';
+
+const Settings = createStackNavigator(
   {
     Settings: SettingsScreen,
   },
@@ -107,9 +133,16 @@ const Settings = createDrawerNavigator(
 );
 
 Settings.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
   ),
 };
 
@@ -120,7 +153,8 @@ const mainDrawer = createDrawerNavigator({
   UserName,
   BetTracker,
   Settings,
-  Rules
+  Rules,
+  Game
 })
 mainDrawer.path = '';
 
