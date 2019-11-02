@@ -1,27 +1,19 @@
-import { AppLoading } from 'expo';
-import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
-import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-
+import React from "react";
+import { createStore, applyMiddleware, compose } from "redux";
+import thunk from "redux-thunk";
+import { rootReducer } from './reducers/index'
+import { Provider } from "react-redux";
 import AppNavigator from './navigation/AppNavigator';
 
-export default function App() {
+const storeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(rootReducer, storeEnhancers(applyMiddleware(thunk)));
+function App() {
   return(
 
-    <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+    <Provider store={store}>
         <AppNavigator />
-      </View>
+    </Provider>
     )
 }
 
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
+export default App

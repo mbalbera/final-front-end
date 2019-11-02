@@ -2,7 +2,7 @@ import {
     USER_SIGN_UP,
     USER_LOGIN,
     FETCH_USER
-} from "../Constants/actionCreators";
+} from "../constants/actionCreators";
 import { AsyncStorage } from "react-native";
 
 const INITIAL_STATE = {
