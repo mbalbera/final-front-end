@@ -10,7 +10,7 @@ import { white } from 'ansi-colors';
 
 export default class HomeScreen extends React.Component {
     state= {
-      sliderValue: 25
+      sliderValue: 50
     }
 
   render(){
@@ -29,12 +29,12 @@ export default class HomeScreen extends React.Component {
       </View>
       <View style={styles.container}>
         <Text style={styles.title}>{`Current Unit:`}</Text>
-          <Text style={styles.title}>{`$${Math.floor(this.state.sliderValue)}`}</Text>
+        <Text style={styles.title}>{`$${Math.floor(this.state.sliderValue)}`}</Text>
         <Slider
           style={styles.slider}
           thumbTintColor='white'
           minimumValue={1}
-          maximumValue={50}
+          maximumValue={100}
           minimumTrackTintColor="white"
           maximumTrackTintColor="black"
           value={this.state.sliderValue}
@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgb(53, 60, 80)',
-    alignContent: "center"
+    alignContent: "center",
+    paddingBottom: 5
   },
   
   getStartedContainer: {
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
   slider: {
     width: 200,
     height: 40,
-    alignContent: 'center',
+    left: 110,
     zIndex: 30,
 
   },
