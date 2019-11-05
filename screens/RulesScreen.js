@@ -1,4 +1,5 @@
 import React from 'react';
+import { withNavigation, DrawerActions } from 'react-navigation';
 import {
     Image,
     Platform,
@@ -9,8 +10,7 @@ import {
     View,
 } from 'react-native';
 
-
-export default function RulesScreen() {
+function RulesScreen() {
     return (
         <ScrollView style={styles.container}>
             <Text>
@@ -573,6 +573,8 @@ export default function RulesScreen() {
 RulesScreen.navigationOptions = {
     title: 'Rules',
 };
+
+export default withNavigation(RulesScreen)
 
 const styles = StyleSheet.create({
     container: {

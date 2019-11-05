@@ -3,12 +3,12 @@ import React from 'react';
 import DrawerIcon from '../components/DrawerIcon';
 import { Slider, Header } from 'react-native-elements';
 import { Button, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { DrawerActions } from 'react-navigation';
+import { withNavigation, DrawerActions } from 'react-navigation';
 import { MonoText } from '../components/StyledText';
 import Categories from '../components/Categories';
 import { white } from 'ansi-colors';
 
-export default class HomeScreen extends React.Component {
+class HomeScreen extends React.Component {
     state= {
       sliderValue: 50
     }
@@ -62,6 +62,7 @@ HomeScreen.navigationOptions = {
   left: <DrawerIcon/>
 };
 
+export default withNavigation(HomeScreen)
 
 
 const styles = StyleSheet.create({

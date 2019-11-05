@@ -2,16 +2,15 @@ import React from 'react'
 import GameCard from '../components/GameCard'
 import DrawerIcon from '../components/DrawerIcon';
 import { Slider, Header } from 'react-native-elements';
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ScrollView,Button } from 'react-native';
+import { withNavigation, DrawerActions } from 'react-navigation';
+import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ScrollView,Button, TouchableOpacity } from 'react-native';
 
 function GameScreen(props){
     return(
         <View style={styles.container}>
             <Header style={styles.header}
                 barStyle={'light-content'}
-                leftComponent={<DrawerIcon
-                // navigation={this.props.navigation}
-                />}
+                leftComponent={<DrawerIcon/>}
                 rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
             />
             <View style={styles.mainContainer}>
@@ -32,6 +31,13 @@ function GameScreen(props){
                             />
                     </View>
                 </View>
+                <View style={styles.container}>
+                    <View style={styles.buttonsContainer}>
+                    <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
+                    </View>
+                    <TouchableOpacity onPress={()=>console.log(props.navigation.navigate('BetSlip'))} style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
+                </View>
             </View>
         </View>
     );
@@ -43,7 +49,7 @@ GameScreen.navigationOptions = {
     left: <DrawerIcon />
 };
 
-export default GameScreen
+export default withNavigation(GameScreen)
 
 const styles = StyleSheet.create({
     container: {
@@ -100,13 +106,35 @@ const styles = StyleSheet.create({
     buttonsContainer: {
         paddingTop: 10,
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingBottom: 50
+        justifyContent: "space-evenly",
+        position: 'absolute',
+        top: 500
     },
-    button: {
-        backgroundColor: 'transparent',
+    button_left: {
+        backgroundColor: 'green',
         width: '40%',
-        height: 40
+        height: 40,
+        borderRadius: 10,
+        justifyContent: "center",
+        textAlign: 'center'
+    },
+    button_right: {
+        backgroundColor: 'blue',
+        width: '40%',
+        height: 40,
+        borderRadius: 10,
+        justifyContent: "center",
+        textAlign: 'center'
+    },
+    betslip_button: {
+        backgroundColor: 'orange',
+        width: '100%',
+        height: 40,
+        borderRadius: 10,
+        justifyContent: "center",
+        textAlign: 'center',
+        position: 'absolute',
+        top: 600
     },
     logo: {
         height: 80,

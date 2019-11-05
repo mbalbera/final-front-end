@@ -109,21 +109,21 @@ Rules.navigationOptions = {
 
 Rules.path = '';
 
-const Game = createStackNavigator(
-  {
-    Game: GameScreen,
-  },
-  config
-);
+// const Game = createStackNavigator(
+//   {
+//     Game: GameScreen,
+//   },
+//   config
+// );
 
-Game.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
-};
+// Game.navigationOptions = {
+//   tabBarLabel: 'Home',
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+//   ),
+// };
 
-Game.path = '';
+// Game.path = '';
 
 const Settings = createStackNavigator(
   {
@@ -153,8 +153,7 @@ const mainDrawer = createDrawerNavigator({
   UserName,
   BetTracker,
   Settings,
-  Rules,
-  Game
+  Rules
 })
 mainDrawer.path = '';
 

@@ -1,13 +1,53 @@
 import React from 'react';
-
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import GameScreen from '../screens/GameScreen';
+import BetSlipScreen from '../screens/BetSlipScreen';
+import { Platform } from 'react-native';
+import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
 
+
+const config = Platform.select({
+  web: { headerMode: 'screen' },
+  default: {},
+});
+
+const Game = createStackNavigator(
+  {
+    Game: GameScreen,
+  },
+  config
+);
+
+Game.navigationOptions = {
+  tabBarLabel: 'Home',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+  ),
+};
+
+Game.path = '';
+
+const BetSlip = createStackNavigator(
+  {
+    BetSlip: BetSlipScreen,
+  },
+  config
+);
+
+BetSlip.navigationOptions = {
+  tabBarLabel: 'Home',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
+  ),
+};
+
+BetSlip.path = '';
+
 export default createAppContainer(
   createSwitchNavigator({
-    // You could add another route here for authentication.
-    // Read more at https://reactnavigation.org/docs/en/auth-flow.html
     Main: MainTabNavigator,
+    Game: Game,
+    BetSlip: BetSlip
   })
 );

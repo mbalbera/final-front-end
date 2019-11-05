@@ -3,25 +3,29 @@ import { ExpoConfigView } from '@expo/samples';
 import {StyleSheet, Text, View } from 'react-native';
 import DrawerIcon from '../components/DrawerIcon';
 import { Header } from 'react-native-elements';
+import { withNavigation, DrawerActions } from 'react-navigation';
 
-export default function SettingsScreen() {
-  return (<View>
+
+function SettingsScreen() {
+  return (
+  <View>
     <Header style={styles.header}
       leftComponent={<DrawerIcon />}
       centerComponent={<Text style={styles.title}>Settings</Text>}
       rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
     />
-    <ExpoConfigView />
   </View>
+  
   )
-  ;
 }
 
 SettingsScreen.navigationOptions = {
   header: null,
-  title: 'Settings',
+  title: 'settings',
   left: <DrawerIcon />
 };
+
+export default withNavigation(SettingsScreen)
 
 const styles = StyleSheet.create({
   container: {

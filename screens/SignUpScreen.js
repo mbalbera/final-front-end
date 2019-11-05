@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TextInput, Button } from 'react-native';
 import _ from 'lodash'
 import { white } from 'ansi-colors';
-// import AppNavigator from "./navigation/MainTabNavigator";
-// import { Provider } from 'react-redux';
+import { withNavigation, DrawerActions } from 'react-navigation';
+import { Provider } from 'react-redux';
 
 class SignUp extends React.Component {
     state = {

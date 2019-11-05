@@ -1,6 +1,7 @@
 import React from 'react';
 import DrawerIcon from '../components/DrawerIcon';
 import { Header } from 'react-native-elements';
+import { withNavigation, DrawerActions } from 'react-navigation';
 
 // import Categories from '../components/Categories'
 import {
@@ -14,8 +15,7 @@ import {
   View,
 } from 'react-native';
 
-
-export default function UsersScreen() {
+function UsersScreen() {
   return (
     <View style={styles.container}>
       <Header style={styles.header}
@@ -42,6 +42,7 @@ UsersScreen.navigationOptions = {
   left: <DrawerIcon />
 };
 
+export default withNavigation(UsersScreen)
 
 const styles = StyleSheet.create({
   container: {

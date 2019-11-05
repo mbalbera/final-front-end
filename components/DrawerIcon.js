@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { DrawerActions } from 'react-navigation';
+import { withNavigation, DrawerActions } from 'react-navigation';
 import { Icon } from 'react-native-elements'
 import React from 'react'
 
@@ -12,4 +12,4 @@ const DrawerIcon = (props) => {
 }
 
 
-export default DrawerIcon
+export default withNavigation(DrawerIcon)

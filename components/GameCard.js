@@ -3,9 +3,8 @@ import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } fro
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
-const Data = [
-    { id: 0, img_path: '../assets/images/sport_images/baseball.png' }, { id: 1, img_path: '../assets/images/sport_images/basketball.png' }, { id: 2, img_path: '../assets/images/sport_images/boxer.png' }, { id: 3, img_path: '../assets/images/sport_images/football.png' }
-    , { id: 4, img_path: 'Golf' }, { id: 5, img_path: 'hocid' }, { id: 6, img_path: 'Movie' }, { id: 7, img_path: 'soccer' }, { id: 8, img_path: 'TV' }
+const Data = [{ key: 5, img_path: require('../assets/images/sport_images/Golf.png') }, { key: 2, img_path: require('../assets/images/sport_images/basketball.png') }, { key: 3, img_path: require('../assets/images/sport_images/boxer.png') }, { key: 4, img_path: require('../assets/images/sport_images/football.png') }
+    , { key: 1, img_path: require('../assets/images/sport_images/baseball.png') }, { key: 6, img_path: require('../assets/images/sport_images/hockey.png') }, { key: 8, img_path: require('../assets/images/sport_images/soccer.png') }, { key: 7, img_path: require('../assets/images/sport_images/horse.png') }, { key: 9, img_path: require('../assets/images/sport_images/TV.png') }
 ];
 
 export default class GameCard extends React.Component {
@@ -15,7 +14,7 @@ export default class GameCard extends React.Component {
 
         this.position = new Animated.ValueXY()
         this.state = {
-            currentIndex: 1
+            currentIndex: 0
         }
 
         this.rotate = this.position.x.interpolate({
@@ -55,6 +54,9 @@ export default class GameCard extends React.Component {
         })
 
     }
+  
+
+
     componentWillMount() {
         this.PanResponder = PanResponder.create({
 
@@ -65,7 +67,8 @@ export default class GameCard extends React.Component {
             },
             onPanResponderRelease: (evt, gestureState) => {
 
-                if (gestureState.dx > 120) {
+                if (gestureState.dx > 120) { //RIGHT
+                    console.log("swiped right")
                     Animated.spring(this.position, {
                         toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
                     }).start(() => {
@@ -74,9 +77,32 @@ export default class GameCard extends React.Component {
                         })
                     })
                 }
-                else if (gestureState.dx < -120) {
+                else if (gestureState.dx < -120) { //LEFT
+                    console.log("swiped left")
                     Animated.spring(this.position, {
                         toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
+                    }).start(() => {
+                        this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+                            this.position.setValue({ x: 0, y: 0 })
+                        })
+                    })
+                }
+                else if (gestureState.dy < -120 ) { //UP
+                    console.log("screen Height: ", SCREEN_HEIGHT)
+                    console.log("position: ", this.position)
+
+                    Animated.spring(this.position, {
+                        toValue: { x: gestureState.dx, y: -SCREEN_HEIGHT - 100 }
+                    }).start(() => {
+                        this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
+                            this.position.setValue({ x: 0, y: 0 })
+                        })
+                    })
+                }
+                else if (gestureState.dy > 120) { //DOWN
+                    console.log("swiped down")
+                    Animated.spring(this.position, {
+                        toValue: { x: gestureState.dx, y: SCREEN_HEIGHT + 100 }
                     }).start(() => {
                         this.setState({ currentIndex: this.state.currentIndex + 1 }, () => {
                             this.position.setValue({ x: 0, y: 0 })
@@ -106,7 +132,7 @@ export default class GameCard extends React.Component {
                 return (
                     <Animated.View
                         {...this.PanResponder.panHandlers}
-                        id={item.id} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
+                        id={item.id} item={item} style={[this.rotateAndTranslate, { height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute' }]}>
                         <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
                             <Text style={{ borderWidth: 1, borderColor: 'blue', color: 'blue', fontSize: 32, fontWeight: '800', padding: 10 }}>GIANTS</Text>
                         </Animated.View>
@@ -124,20 +150,17 @@ export default class GameCard extends React.Component {
             else {
                 return (
                     <Animated.View
-
-                        id={item.id} style={[{
+                        id={item.id} item={item} style={[{
                             opacity: this.nextCardOpacity,
                             transform: [{ scale: this.nextCardScale }],
                             height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute'
                         }]}>
                         <Animated.View style={{ opacity: 0, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
                             <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>RIGHT</Text>
-
                         </Animated.View>
 
                         <Animated.View style={{ opacity: 0, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
                             <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>LEFT</Text>
-
                         </Animated.View>
 
                         <Image
