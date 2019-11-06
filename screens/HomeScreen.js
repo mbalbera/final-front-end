@@ -30,16 +30,6 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
         <Text style={styles.title}>{`Current Unit:`}</Text>
         <Text style={styles.title}>{`$${Math.floor(this.state.sliderValue)}`}</Text>
-        <Slider
-          style={styles.slider}
-          thumbTintColor='white'
-          minimumValue={1}
-          maximumValue={100}
-          minimumTrackTintColor="white"
-          maximumTrackTintColor="black"
-          value={this.state.sliderValue}
-          onValueChange={sliderValue => this.setState({ sliderValue })}
-          />
       </View>
         <ScrollView
             // contentContainerStyle={styles.contentContainer}
