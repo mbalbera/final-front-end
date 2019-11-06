@@ -1,4 +1,5 @@
 import React from 'react'
+import SvgUri from 'react-native-svg-uri-reborn';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -88,8 +89,7 @@ export default class GameCard extends React.Component {
                     })
                 }
                 else if (gestureState.dy < -120 ) { //UP
-                    console.log("screen Height: ", SCREEN_HEIGHT)
-                    console.log("position: ", this.position)
+                    console.log("swiped up")
 
                     Animated.spring(this.position, {
                         toValue: { x: gestureState.dx, y: -SCREEN_HEIGHT - 100 }
@@ -141,9 +141,18 @@ export default class GameCard extends React.Component {
                             <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>JETS</Text>
                         </Animated.View>
 
-                        <Image
-                            style={{ flex: 1, height: 350, width: 350, resizeMode: 'center', borderRadius: 20 }}
-                            source={require("../assets/images/sport_images/image.png")} />
+                        <View style={styles.container}>
+                            <SvgUri
+                                width="175"
+                                height="300"
+                                source={require('../assets/images/SVGs/Away_Team_Container')}
+                            />
+                            <SvgUri
+                                width="175"
+                                height="300"
+                                source={require('../assets/images/SVGs/Home_Team_Container')}
+                            />
+                        </View>
                     </Animated.View>
                 )
             }
@@ -163,9 +172,18 @@ export default class GameCard extends React.Component {
                             <Text style={{ borderWidth: 1, borderColor: 'red', color: 'red', fontSize: 32, fontWeight: '800', padding: 10 }}>LEFT</Text>
                         </Animated.View>
 
-                        <Image
-                            style={{ flex: 1, height: 350, width: 350, resizeMode: 'center', borderRadius: 20 }}
-                            source={require("../assets/images/sport_images/image.png")} />
+                        <View style={styles.container}>
+                            <SvgUri
+                                width="175"
+                                height="300"
+                                source={require('../assets/images/SVGs/Away_Team_Container')}
+                            />
+                            <SvgUri
+                                width="175"
+                                height="300"
+                                source={require('../assets/images/SVGs/Home_Team_Container')}
+                            />
+                        </View>
 
                     </Animated.View>
                 )

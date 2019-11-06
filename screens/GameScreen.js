@@ -33,10 +33,12 @@ function GameScreen(props){
                 </View>
                 <View style={styles.container}>
                     <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
                     </View>
+                    <View>
                     <TouchableOpacity onPress={()=>console.log(props.navigation.navigate('BetSlip'))} style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
     },
 
     mainContainer:{
-        top: 110,
+        top: '10%',
         position: "absolute",
         alignSelf: 'center',
     },
@@ -108,7 +110,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: "space-evenly",
         position: 'absolute',
-        top: 500
+        top: 450
     },
     button_left: {
         backgroundColor: 'green',
