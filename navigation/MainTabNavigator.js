@@ -86,6 +86,51 @@ BetTracker.navigationOptions = {
 
 BetTracker.path = '';
 
+// const Game = createStackNavigator(
+//   {
+//     Game: GameScreen,
+//   },
+//   config
+// );
+
+// Game.navigationOptions = {
+//   tabBarLabel: 'Home',
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon
+//       focused={focused}
+//       name={
+//         Platform.OS === 'ios'
+//           ? `ios-information-circle${focused ? '' : '-outline'}`
+//           : 'md-information-circle'
+//       }
+//     />
+//   ),
+// };
+
+// Game.path = '';
+
+// const BetSlip = createStackNavigator(
+//   {
+//     BetSlip: BetSlipScreen,
+//   },
+//   config
+// );
+
+// BetSlip.navigationOptions = {
+//   tabBarLabel: 'Home',
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon
+//       focused={focused}
+//       name={
+//         Platform.OS === 'ios'
+//           ? `ios-information-circle${focused ? '' : '-outline'}`
+//           : 'md-information-circle'
+//       }
+//     />
+//   ),
+// };
+
+// BetSlip.path = '';
 const Rules = createStackNavigator(
   {
     Rules: RulesScreen,
@@ -108,22 +153,6 @@ Rules.navigationOptions = {
 };
 
 Rules.path = '';
-
-// const Game = createStackNavigator(
-//   {
-//     Game: GameScreen,
-//   },
-//   config
-// );
-
-// Game.navigationOptions = {
-//   tabBarLabel: 'Home',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-//   ),
-// };
-
-// Game.path = '';
 
 const Settings = createStackNavigator(
   {
@@ -153,7 +182,7 @@ const mainDrawer = createDrawerNavigator({
   UserName,
   BetTracker,
   Settings,
-  Rules
+  Rules,
 })
 mainDrawer.path = '';
 

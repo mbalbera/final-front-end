@@ -14,14 +14,11 @@ class HomeScreen extends React.Component {
     }
 
   render(){
-
     return (
       <View style={styles.container}>
       <Header style={styles.header} 
         barStyle={'light-content'}
-        leftComponent={<DrawerIcon {...this.props}
-        // navigation={this.this.props.navigation} 
-        />}
+        leftComponent={<DrawerIcon/>}
         rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
         />
       <View style={styles.getStartedContainer}>

@@ -1,22 +1,26 @@
+'use strict';
 import React from 'react'
-import GameCard from '../components/GameCard'
+import GameCard from '../components/Card'
 import DrawerIcon from '../components/DrawerIcon';
 import { Slider, Header } from 'react-native-elements';
 import { withNavigation, DrawerActions } from 'react-navigation';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ScrollView,Button, TouchableOpacity } from 'react-native';
+import Styles from '../components/Styles';
+import CardStack from '../components/CardStack';
+import mainDrawer from '../navigation/MainTabNavigator'
+
+
 
 function GameScreen(props){
     return(
         <View style={styles.container}>
             <Header style={styles.header}
                 barStyle={'light-content'}
-                leftComponent={<DrawerIcon/>}
+                leftComponent={<DrawerIcon />}
                 rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
             />
             <View style={styles.mainContainer}>
-                <View style={styles.gameContainer}>
-                    <GameCard style={styles.pic}/>
-                </View>
+               
                 <View style={styles.midContainer}>
                     <View style={styles.container}>
                         <Text style={styles.title}>Confidence Meter</Text>
@@ -30,6 +34,9 @@ function GameScreen(props){
                             value={2.5}
                             />
                     </View>
+                </View>
+                <View style={styles.gameContainer}>
+                    <CardStack />
                 </View>
                 <View style={styles.container}>
                     <View style={styles.buttonsContainer}>
@@ -52,6 +59,8 @@ GameScreen.navigationOptions = {
 export default withNavigation(GameScreen)
 
 const styles = StyleSheet.create({
+
+
     container: {
         flex: 1,
         backgroundColor: 'rgb(53, 60, 80)',
@@ -83,10 +92,11 @@ const styles = StyleSheet.create({
     },
 
     gameContainer: {
-        marginTop: 15,
-        paddingTop: 25,
-        paddingBottom: 25,
-        right: 290,
+        // marginTop: 15,
+        // paddingTop: 25,
+        // paddingBottom: 25,
+        left: 200,
+        top: 200,
         position: 'absolute'
     },
 
