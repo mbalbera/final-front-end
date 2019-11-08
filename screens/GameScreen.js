@@ -1,5 +1,5 @@
 'use strict';
-import React from 'react'
+import React, { Component } from 'react'
 import GameCard from '../components/Card'
 import DrawerIcon from '../components/DrawerIcon';
 import { Slider, Header } from 'react-native-elements';
@@ -11,7 +11,13 @@ import mainDrawer from '../navigation/MainTabNavigator'
 
 
 
-function GameScreen(props){
+class GameScreen extends React.Component{
+    
+    state ={
+        sliderValue: 5
+    }
+    
+    render(){
     return(
         <View style={styles.container}>
             <Header style={styles.header}
@@ -28,10 +34,10 @@ function GameScreen(props){
                             style={styles.slider}
                             thumbTintColor='white'
                             minimumValue={0}
-                            maximumValue={5}
+                            maximumValue={10}
                             minimumTrackTintColor="white"
                             maximumTrackTintColor="black"
-                            value={2.5}
+                            value={this.state.sliderValue}
                             />
                     </View>
                 </View>
@@ -43,11 +49,12 @@ function GameScreen(props){
                     <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={()=>console.log(props.navigation.navigate('BetSlip'))} style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={()=>console.log(this.props.navigation.navigate('BetSlip'))} style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
                 </View>
             </View>
         </View>
     );
+    }
 }
 
 GameScreen.navigationOptions = {
@@ -95,8 +102,8 @@ const styles = StyleSheet.create({
         // marginTop: 15,
         // paddingTop: 25,
         // paddingBottom: 25,
-        left: 200,
-        top: 200,
+        left: 105,
+        top: 400,
         position: 'absolute'
     },
 

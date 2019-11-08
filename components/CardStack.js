@@ -33,25 +33,11 @@ export default class CardStack extends Component {
     };
 
     render() {
-        // console.log(this.state.games)
+       let cards = this.state.games.map(game => <Card info={game}key={game.id}onSwipe={this.handleRemove}/>)
         return (
-            <FlatList
-                style={Styles.cardContainer}
-                contentContainerStyle={Styles.cardStack}
-                data={this.state.games}
-                renderItem={({ item, index }) => (
-                    <Card
-                        info={item}
-                        index={index}
-                        onSwipe={this.handleRemove}
-                    />
-                )}
-                keyExtractor={(item) => item.id}
-                scrollEnabled={false}
-            />
-            // <View>
-            //     <Card onSwipe={this.handleRemove}/>
-            // </View>
+            <View style={Styles.cardContainer} contentContainerStyle={Styles.cardStack}>
+                {cards}
+            </View>
         );
     }
 }

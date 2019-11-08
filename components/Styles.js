@@ -20,7 +20,7 @@ const Styles = StyleSheet.create({
         justifyContent: 'center'
     },
     card: {
-        height: 500,
+        height: 400,
         width: 350,
         borderWidth: 1,
         borderColor: 'lightgrey',
@@ -31,7 +31,9 @@ const Styles = StyleSheet.create({
     },
     cardImage: {
         flex: 1,
-        backgroundColor: '#1E90FF'
+        backgroundColor: '#1E90FF',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
     cardText: {
         margin: 20
@@ -46,7 +48,15 @@ const Styles = StyleSheet.create({
         fontSize: 15,
         color: 'grey',
         backgroundColor: 'transparent'
-    }
+    },
+    picLeft: {
+        backgroundColor: 'rgb(0,118,182)',
+        width:'50%'
+    },
+    picRight: {
+        backgroundColor: 'rgb(11,22,42)',
+        width:'50%'
+    },
 });
 
 export default Styles;

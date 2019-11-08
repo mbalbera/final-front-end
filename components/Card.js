@@ -70,7 +70,12 @@ class Card extends Component {
         return (
             <Animated.View style={this.getMainCardStyle()} {...this.panResponder.panHandlers}>
                 <View style={Styles.card}>
-                    <Image source={require('../assets/images/sport_images/image.png').large} style={Styles.cardImage} />
+                    <View style={Styles.cardImage}>
+                        
+                        {/* <Image source={require('../assets/images/sport_images/image.png')} style={Styles.cardImage} />  */}
+                        <View style={Styles.picLeft}></View>
+                        <View style={Styles.picRight}></View>
+                    </View>
                     <View style={Styles.cardText}>
                         <Text style={Styles.cardTextMain}>{`${this.props.info.home_team_abr} VS ${this.props.info.away_team_abr}` }</Text>
                         {this.props.info.kind_of_bet === "moneyline" ? (<Text>{this.props.info.home_team_abr} {this.props.info.over_home_value}</Text>) : null}
