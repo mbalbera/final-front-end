@@ -8,11 +8,20 @@ import {
     Text
 } from 'react-native';
 import Styles from './Styles.js';
+import NFL from './NFLTeamInfo'
+
 
 class Card extends Component {
-    state = {
-            pan: new Animated.ValueXY()
+    constructor(){
+        super()
+        this.position
+        this.state = {
+            pan: new Animated.ValueXY(),
+            homeTeamImg: "",
+            awayTeamImg: ""
         };
+    }
+    
 
     componentWillMount() {
         this.panResponder = PanResponder.create({
@@ -51,6 +60,15 @@ class Card extends Component {
         this.state.pan.y.removeAllListeners();
     }
 
+    getImages(){
+        const homeTeamImg = NFL[this.props.info.home_team_abr]["img_path"]
+        const awayTeamImg = NFL[this.props.info.away_team_abr]["img_path"]
+        this.setState({
+            homeTeamImg: homeTeamImg,
+            awayTeamImg: awayTeamImg
+        })
+    }
+
     getMainCardStyle() {
         let { pan } = this.state;
         return [
@@ -66,15 +84,22 @@ class Card extends Component {
         ];
     }
 
+    componentDidMount(){
+        this.getImages()
+    }
+    
     render() {
         return (
             <Animated.View style={this.getMainCardStyle()} {...this.panResponder.panHandlers}>
                 <View style={Styles.card}>
                     <View style={Styles.cardImage}>
                         
-                        {/* <Image source={require('../assets/images/sport_images/image.png')} style={Styles.cardImage} />  */}
-                        <View style={Styles.picLeft}></View>
-                        <View style={Styles.picRight}></View>
+                        <View style={{width:'50%', backgroundColor: NFL[this.props.info.home_team_abr]["background_color"]}}>   
+                            <Image source={this.state.homeTeamImg} style={Styles.teamLogo}/> 
+                        </View>
+                        <View style={{width:'50%', backgroundColor: NFL[this.props.info.away_team_abr]["background_color"]}}>
+                            <Image source={this.state.awayTeamImg} style={Styles.teamLogo}/> 
+                        </View>
                     </View>
                     <View style={Styles.cardText}>
                         <Text style={Styles.cardTextMain}>{`${this.props.info.home_team_abr} VS ${this.props.info.away_team_abr}` }</Text>
@@ -85,7 +110,6 @@ class Card extends Component {
                         {this.props.info.kind_of_bet === "total" ? (<Text>Total: Over/Under {this.props.info.home_team_spread} </Text>) : null}
                     </View>
                 </View>
-            {/* <Text>Card</Text> */}
             </Animated.View>
         );
     }

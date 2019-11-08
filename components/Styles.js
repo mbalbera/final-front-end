@@ -57,6 +57,12 @@ const Styles = StyleSheet.create({
         backgroundColor: 'rgb(11,22,42)',
         width:'50%'
     },
+    teamLogo:{
+        flex: 1,
+        width: null,
+        height: null,
+        resizeMode: 'contain',
+    }
 });
 
 export default Styles;
