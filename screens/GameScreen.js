@@ -17,6 +17,15 @@ class GameScreen extends React.Component{
         sliderValue: 5
     }
     
+    changeSlider(value){
+        // console.log("v: ",value)
+        const sliderValue = Math.floor(value)
+        console.log("sv: ",sliderValue)
+        this.setState({
+            sliderValue
+        })
+    }
+
     render(){
     return(
         <View style={styles.container}>
@@ -38,6 +47,7 @@ class GameScreen extends React.Component{
                             minimumTrackTintColor="white"
                             maximumTrackTintColor="black"
                             value={this.state.sliderValue}
+                            onValueChange={(value)=>this.changeSlider(value)}
                             />
                     </View>
                 </View>
@@ -45,10 +55,10 @@ class GameScreen extends React.Component{
                     <CardStack />
                 </View>
                 <View style={styles.container}>
-                    <View style={styles.buttonsContainer}>
+                    {/* <View style={styles.buttonsContainer}>
                     <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
-                    </View>
+                    </View> */}
                     <TouchableOpacity onPress={()=>console.log(this.props.navigation.navigate('BetSlip'))} style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
                 </View>
             </View>
@@ -102,9 +112,10 @@ const styles = StyleSheet.create({
         // marginTop: 15,
         // paddingTop: 25,
         // paddingBottom: 25,
-        left: 105,
-        top: 400,
-        position: 'absolute'
+        left: '50%',
+        top:'150%',
+        zIndex: 88
+        // position: 'absolute'
     },
 
 
@@ -120,38 +131,17 @@ const styles = StyleSheet.create({
         color: 'rgba(96,100,109, 1)',
         textAlign: 'center',
     },
-    buttonsContainer: {
-        paddingTop: 10,
-        flexDirection: 'row',
-        justifyContent: "space-evenly",
-        position: 'absolute',
-        top: 500
-    },
-    button_left: {
-        backgroundColor: 'green',
-        width: '40%',
-        height: 40,
-        borderRadius: 10,
-        justifyContent: "center",
-        textAlign: 'center'
-    },
-    button_right: {
-        backgroundColor: 'blue',
-        width: '40%',
-        height: 40,
-        borderRadius: 10,
-        justifyContent: "center",
-        textAlign: 'center'
-    },
+   
     betslip_button: {
-        backgroundColor: 'orange',
-        width: '100%',
+        backgroundColor: 'rgb(41,139,217)',
+        width: '60%',
         height: 40,
         borderRadius: 10,
         justifyContent: "center",
         textAlign: 'center',
-        position: 'absolute',
-        top: 600
+        top: '1200%',
+        left: '20%'
+        
     },
     logo: {
         height: 80,

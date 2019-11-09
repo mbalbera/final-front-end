@@ -34,7 +34,7 @@ const NFL= {
    },
    "DAL": {
         img_path: require('../assets/images/sport_images/NFL_LOGOS/DAL.png'),
-        background_color:'rgb(94,55,74)'
+        background_color:'rgb(134,147,151)'
    },
    "DEN": {
         img_path: require('../assets/images/sport_images/NFL_LOGOS/DEN.png'),
@@ -90,11 +90,11 @@ const NFL= {
    },
    "NYG": {
         img_path: require('../assets/images/sport_images/NFL_LOGOS/NYG.png'),
-        background_color:'rgb(18,87,64)'
-   },
-   "NYJ": {
-        img_path: require('../assets/images/sport_images/NFL_LOGOS/NYJ.png'),
         background_color:'rgb(0,34,68)'
+     },
+   "NYJ": {
+         img_path: require('../assets/images/sport_images/NFL_LOGOS/NYJ.png'),
+         background_color:'rgb(18,87,64)'
    },
    "OAK": {
         img_path: require('../assets/images/sport_images/NFL_LOGOS/OAK.png'),
@@ -114,7 +114,7 @@ const NFL= {
    },
    "SEA": {
         img_path: require('../assets/images/sport_images/NFL_LOGOS/SEA.png'),
-        background_color:'rgb(105,190,40)'
+        background_color:'rgb(0,34,68)'
    },
    "TB": {
         img_path: require('../assets/images/sport_images/NFL_LOGOS/TB.png'),

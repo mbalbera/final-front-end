@@ -12,15 +12,11 @@ import NFL from './NFLTeamInfo'
 
 
 class Card extends Component {
-    constructor(){
-        super()
-        this.position
-        this.state = {
+    state = {
             pan: new Animated.ValueXY(),
             homeTeamImg: "",
             awayTeamImg: ""
         };
-    }
     
 
     componentWillMount() {
@@ -34,16 +30,18 @@ class Card extends Component {
                 null, { dx: this.state.pan.x, dy: this.state.pan.y }
             ]),
             onPanResponderRelease: (e, { vx, vy }) => {
+                console.log("swiped up/down this far: ", this.state.pan.y._value)
+                console.log("swiped left/right this far: ", this.state.pan.y._value)
                 if (this.state.pan.x._value < -150) {
                     this.props.onSwipe(this.props.index)
                     console.log("swiped left")
                 } else if (this.state.pan.x._value > 150) {
                     this.props.onSwipe(this.props.index)
                     console.log("swiped right")
-                } else if (this.state.pan.y._value > 150) {
+                } else if (this.state.pan.y._value > 25) {
                     this.props.onSwipe(this.props.index)
                     console.log("swiped down")
-                } else if (this.state.pan.y._value < 150) {
+                } else if (this.state.pan.y._value < 25) {
                     this.props.onSwipe(this.props.index)
                     console.log("swiped up")
                 } else {
@@ -110,6 +108,7 @@ class Card extends Component {
                         {this.props.info.kind_of_bet === "total" ? (<Text>Total: Over/Under {this.props.info.home_team_spread} </Text>) : null}
                     </View>
                 </View>
+
             </Animated.View>
         );
     }

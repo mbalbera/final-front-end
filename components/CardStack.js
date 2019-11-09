@@ -10,11 +10,13 @@ export default class CardStack extends Component {
         picks: []
     };
 
+    
 
    componentDidMount(){
        let sport = this.props.sport
         // fetch(`http://localhost:3000/api/v1/bets/${sport}`)
-        fetch(`http://localhost:3000/api/v1/bets/nfl`)
+        fetch(`http://localhost:3000/api/v1/bets/nfl`) // FOR SIMULATOR
+        // fetch(`https://serious-treefrog-27.localtunnel.me/api/v1/bets/nfl`)  // FOR LOCAL TUNNEL TO iOS
            .then(resp => resp.json())
            .then(data =>
                this.setState({
