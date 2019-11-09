@@ -6,8 +6,7 @@ import Card from './Card.js';
 
 export default class CardStack extends Component {
     state = {
-        games: [],
-        picks: []
+        games: []
     };
 
     
@@ -26,7 +25,6 @@ export default class CardStack extends Component {
    }
    
             
-    // handleRemove(i){console.log("handleRemove", i)}
     handleRemove = () => {
         let newGames = this.state.games.slice(1)
         this.setState({

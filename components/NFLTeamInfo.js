@@ -74,7 +74,7 @@ const NFL= {
    },
    "MIA": {
         img_path: require('../assets/images/sport_images/NFL_LOGOS/MIA.png'),
-        background_color:'rgb(0,142,151)'
+        background_color:'rgb(255,255,255)'
    },
    "MIN": {
         img_path: require('../assets/images/sport_images/NFL_LOGOS/MIN.png'),

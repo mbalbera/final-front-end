@@ -14,7 +14,8 @@ import mainDrawer from '../navigation/MainTabNavigator'
 class GameScreen extends React.Component{
     
     state ={
-        sliderValue: 5
+        sliderValue: 5,
+        picks: []
     }
     
     changeSlider(value){
@@ -25,6 +26,15 @@ class GameScreen extends React.Component{
             sliderValue
         })
     }
+
+    // onSwipe(){
+    //     if (left){
+    //         (pass entire GameObj, hometeam picked)
+    //     } else if (right){
+    //         (pass entire GameObj, awayteam picked)
+    //     }
+    //     then remove gameobj from card stack
+    // }
 
     render(){
     return(
