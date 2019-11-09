@@ -72,7 +72,7 @@ const BetSlip = createStackNavigator(
 );
 
 BetSlip.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: null,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}

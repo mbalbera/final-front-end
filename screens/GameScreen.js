@@ -44,7 +44,7 @@ class GameScreen extends React.Component{
                
                 <View style={styles.midContainer}>
                     <View style={styles.container}>
-                        <Text style={styles.title}>Confidence Meter</Text>
+                        <Text style={styles.title}>Confidence Meter: </Text>
                         <Slider
                             style={styles.slider}
                             thumbTintColor='white'
@@ -55,6 +55,7 @@ class GameScreen extends React.Component{
                             value={this.state.sliderValue}
                             onValueChange={(value)=>this.changeSlider(value)}
                             />
+                        <Text style={styles.title}>{this.state.sliderValue}/10</Text>
                     </View>
                 </View>
                 <View style={styles.gameContainer}>
@@ -115,13 +116,10 @@ const styles = StyleSheet.create({
     },
 
     gameContainer: {
-        // marginTop: 15,
-        // paddingTop: 25,
-        // paddingBottom: 25,
+       
         left: '50%',
-        top:'150%',
+        top:'130%',
         zIndex: 88
-        // position: 'absolute'
     },
 
 

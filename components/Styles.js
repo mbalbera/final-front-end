@@ -36,7 +36,7 @@ const Styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     cardText: {
-        margin: 20
+        margin: 20,
     },
     cardTextMain: {
         textAlign: 'left',
