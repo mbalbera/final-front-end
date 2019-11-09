@@ -12,42 +12,10 @@ const config = Platform.select({
   default: {},
 });
 
-const Game = createStackNavigator(
-  {
-    Game: GameScreen,
-  },
-  config
-);
-
-Game.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
-};
-
-Game.path = '';
-
-const BetSlip = createStackNavigator(
-  {
-    BetSlip: BetSlipScreen,
-  },
-  config
-);
-
-BetSlip.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
-};
-
-BetSlip.path = '';
 
 export default createAppContainer(
   createSwitchNavigator({
     Main: MainTabNavigator,
-    Game: Game,
-    BetSlip: BetSlip
+ 
   })
 );

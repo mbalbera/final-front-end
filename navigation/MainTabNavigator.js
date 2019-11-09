@@ -4,11 +4,12 @@ import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import DrawerIcon from '../components/DrawerIcon'
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import GameScreen from '../screens/GameScreen';
 import UsersScreen from '../screens/UsersScreen';
 import BetTrackerScreen from '../screens/BetTrackerScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import RulesScreen from '../screens/RulesScreen';
+import GameScreen from '../screens/GameScreen'
+import BetSlipScreen from '../screens/BetSlipScreen'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -39,6 +40,52 @@ UserName.navigationOptions = {
 };
 
 UserName.path = '';
+
+const Game = createStackNavigator(
+  {
+    Game: GameScreen,
+  },
+  config
+);
+
+Game.navigationOptions = {
+  tabBarLabel: 'Home',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
+Game.path = '';
+
+const BetSlip = createStackNavigator(
+  {
+    BetSlip: BetSlipScreen,
+  },
+  config
+);
+
+BetSlip.navigationOptions = {
+  tabBarLabel: 'Home',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
+BetSlip.path = '';
 
 const Home = createStackNavigator(
   {
@@ -86,51 +133,8 @@ BetTracker.navigationOptions = {
 
 BetTracker.path = '';
 
-// const Game = createStackNavigator(
-//   {
-//     Game: GameScreen,
-//   },
-//   config
-// );
 
-// Game.navigationOptions = {
-//   tabBarLabel: 'Home',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={
-//         Platform.OS === 'ios'
-//           ? `ios-information-circle${focused ? '' : '-outline'}`
-//           : 'md-information-circle'
-//       }
-//     />
-//   ),
-// };
 
-// Game.path = '';
-
-// const BetSlip = createStackNavigator(
-//   {
-//     BetSlip: BetSlipScreen,
-//   },
-//   config
-// );
-
-// BetSlip.navigationOptions = {
-//   tabBarLabel: 'Home',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon
-//       focused={focused}
-//       name={
-//         Platform.OS === 'ios'
-//           ? `ios-information-circle${focused ? '' : '-outline'}`
-//           : 'md-information-circle'
-//       }
-//     />
-//   ),
-// };
-
-// BetSlip.path = '';
 const Rules = createStackNavigator(
   {
     Rules: RulesScreen,
@@ -183,6 +187,8 @@ const mainDrawer = createDrawerNavigator({
   BetTracker,
   Settings,
   Rules,
+  Game,
+  BetSlip
 })
 mainDrawer.path = '';
 

@@ -1,13 +1,9 @@
-'use strict';
-import React, { Component } from 'react'
-import GameCard from '../components/Card'
+import React from 'react'
 import DrawerIcon from '../components/DrawerIcon';
 import { Slider, Header } from 'react-native-elements';
-import { withNavigation, DrawerActions } from 'react-navigation';
+import { withNavigation} from 'react-navigation';
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ScrollView,Button, TouchableOpacity } from 'react-native';
-import Styles from '../components/Styles';
 import CardStack from '../components/CardStack';
-import mainDrawer from '../navigation/MainTabNavigator'
 
 
 
