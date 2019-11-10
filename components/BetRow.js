@@ -2,6 +2,7 @@ import React from 'react'
 import {StyleSheet, View, Text, Button} from 'react-native'
 
 function BetRow(props){
+    console.log(props.slip)
         return (
             <View style={styles.container}>
                 <Text onPress={console.log(this.props)} style={{ width: 75, height: 50, backgroundColor: 'powderblue' }}>{props.bet.team}</Text>
