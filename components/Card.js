@@ -83,7 +83,6 @@ class Card extends Component {
     }
 
     componentDidMount(){
-        debugger
         this.getImages()
     }
     
@@ -106,20 +105,14 @@ class Card extends Component {
     displayTeamLine(){
         if (this.props.info.kind_of_bet === "moneyline"){
             return(
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
                     <Text style={{textAlign:'center'}}>{this.props.info.home_team_abr} {this.addPlus(this.props.info.over_home_value)}</Text>
                     <Text style={{textAlign:'center'}}>{this.props.info.away_team_abr} {this.addPlus(this.props.info.under_away_value)}</Text>
                 </View>
             )
         } else if (this.props.info.kind_of_bet === "spread"){
             return(
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                }}>
+                <View style={{flexDirection: 'row',justifyContent: 'space-around',}}>
                     <Text style={{textAlign:'center'}}>{this.props.info.home_team_abr} {this.props.info.home_team_spread} {this.props.info.over_home_value}</Text>
                     <Text style={{textAlign:'center'}}>{this.props.info.away_team_abr} {this.props.info.away_team_spread} {this.props.info.under_away_value}</Text>
                 </View>

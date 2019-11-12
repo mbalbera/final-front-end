@@ -2,7 +2,9 @@
 import React, { Component } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import Styles from './Styles.js';
-import Card from './Card.js';
+import Card from './Test.js'
+// import Card from './Card.js';
+
 
 export default class CardStack extends Component {
     state = {

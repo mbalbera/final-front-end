@@ -116,9 +116,9 @@ const styles = StyleSheet.create({
     },
 
     gameContainer: {
-       
-        left: '50%',
-        top:'130%',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
         zIndex: 88
     },
 
