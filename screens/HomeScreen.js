@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
   },
   appTitle:{
     fontSize: 36,
+    color: 'white'
   }
 });
 

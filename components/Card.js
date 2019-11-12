@@ -38,10 +38,10 @@ class Card extends Component {
                 } else if (this.state.pan.x._value > 150) {
                     this.props.onSwipe(this.props.index)
                     console.log("swiped right")
-                } else if (this.state.pan.y._value > 250) {
+                } else if (this.state.pan.y._value > 320) {
                     this.props.onSwipe(this.props.index)
                     console.log("swiped down")
-                } else if (this.state.pan.y._value < 250) {
+                } else if (this.state.pan.y._value < -330) {
                     this.props.onSwipe(this.props.index)
                     console.log("swiped up")
                 } else {
@@ -83,36 +83,51 @@ class Card extends Component {
     }
 
     componentDidMount(){
+        debugger
         this.getImages()
     }
     
     displayType(){
         return (
-            <Text>
+            <Text style={{ textAlign: 'center' }}>
                 {this.props.info.kind_of_bet.charAt(0).toUpperCase() + this.props.info.kind_of_bet.slice(1)}
             </Text>
         )
     }
+
+    addPlus(n){
+        if (n > 0 ) {
+            return `+${n}` 
+        } else {
+            return `${n}` 
+        }
+
+    }
     displayTeamLine(){
         if (this.props.info.kind_of_bet === "moneyline"){
             return(
-                <View>
-                    <Text>{this.props.info.home_team_abr} {this.props.info.over_home_value}</Text>
-                    <Text>{this.props.info.away_team_abr} {this.props.info.under_away_value}</Text>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                }}>
+                    <Text style={{textAlign:'center'}}>{this.props.info.home_team_abr} {this.addPlus(this.props.info.over_home_value)}</Text>
+                    <Text style={{textAlign:'center'}}>{this.props.info.away_team_abr} {this.addPlus(this.props.info.under_away_value)}</Text>
                 </View>
             )
         } else if (this.props.info.kind_of_bet === "spread"){
             return(
-
-                <View>
-                    <Text>{this.props.info.home_team_abr} {this.props.info.home_team_spread} {this.props.info.over_home_value}</Text>
-                    <Text>{this.props.info.away_team_abr} {this.props.info.away_team_spread} {this.props.info.under_away_value}</Text>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                }}>
+                    <Text style={{textAlign:'center'}}>{this.props.info.home_team_abr} {this.props.info.home_team_spread} {this.props.info.over_home_value}</Text>
+                    <Text style={{textAlign:'center'}}>{this.props.info.away_team_abr} {this.props.info.away_team_spread} {this.props.info.under_away_value}</Text>
                 </View>
             )
         } else{
             return(
                 <View>
-                    <Text>Over/Under {this.props.info.home_team_spread} </Text>
+                    <Text style={{textAlign:'center'}}>Over/Under {this.props.info.home_team_spread} Points</Text>
                 </View>
                 )
         }

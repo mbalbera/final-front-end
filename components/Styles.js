@@ -39,7 +39,7 @@ const Styles = StyleSheet.create({
         margin: 20,
     },
     cardTextMain: {
-        textAlign: 'left',
+        textAlign: 'center',
         fontSize: 20,
         backgroundColor: 'transparent'
     },

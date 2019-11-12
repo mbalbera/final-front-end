@@ -15,7 +15,7 @@ export default class CardStack extends Component {
        let sport = this.props.sport
         // fetch(`http://localhost:3000/api/v1/bets/${sport}`)
         fetch(`http://localhost:3000/api/v1/bets/nfl`) // FOR SIMULATOR
-        // fetch(`https://serious-treefrog-27.localtunnel.me/api/v1/bets/nfl`)  // FOR LOCAL TUNNEL TO iOS
+        // fetch(`https://tasty-otter-52.localtunnel.me/api/v1/bets/nfl`)  // FOR LOCAL TUNNEL TO iOS
            .then(resp => resp.json())
            .then(data =>
                this.setState({
@@ -33,7 +33,10 @@ export default class CardStack extends Component {
     };
 
     render() {
-       let cards = this.state.games.map(game => <Card info={game}key={game.id}onSwipe={this.handleRemove}/>)
+
+       let cards = this.state.games.map(game => {
+       return <Card info={game}key={game.id} onSwipe={this.handleRemove}/>
+    })
         return (
             <View style={Styles.cardContainer} contentContainerStyle={Styles.cardStack}>
                 {cards}
