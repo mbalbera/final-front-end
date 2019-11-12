@@ -26,16 +26,18 @@ export default class CardStack extends Component {
            )
    }
    
-            
-    handleRemove = () => {
-        let newGames = this.state.games.slice(1)
+    handleRemove = (direction, gameObj) => {
+        if (direction === "left" || direction === "right") {
+            this.props.addPick(direction, gameObj)
+        }
+        let updated = [...this.state.games].slice(0, this.state.games.length - 1)
         this.setState({
-            games: newGames
-       })
+            games: updated
+        })
     };
 
-    render() {
 
+    render() {
        let cards = this.state.games.map(game => {
        return <Card info={game}key={game.id} onSwipe={this.handleRemove}/>
     })

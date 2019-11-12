@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
 import Styles from './Styles.js';
 import NFL from './NFLTeamInfo'
+import { onSessionWasInterrupted } from 'expo/build/AR';
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 
@@ -70,6 +71,7 @@ export default class Card extends React.Component {
 
                 if (gestureState.dx > 120) { //RIGHT
                     console.log("swiped right")
+                    this.props.onSwipe("right", this.props.info)
                     Animated.spring(this.position, {
                         toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy }
                     }).start(() => {
@@ -77,9 +79,11 @@ export default class Card extends React.Component {
                             this.position.setValue({ x: 0, y: 0 })
                         })
                     })
+                    
                 }
                 else if (gestureState.dx < -120) { //LEFT
                     console.log("swiped left")
+                    this.props.onSwipe("left", this.props.info)
                     Animated.spring(this.position, {
                         toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy }
                     }).start(() => {
@@ -89,9 +93,8 @@ export default class Card extends React.Component {
                     })
                 }
                 else if (gestureState.dy < -120 ) { //UP
-                    console.log("screen Height: ", SCREEN_HEIGHT)
-                    console.log("position: ", this.position)
-
+                    console.log("swiped up")
+                    this.props.onSwipe("up", this.props.info)
                     Animated.spring(this.position, {
                         toValue: { x: gestureState.dx, y: -SCREEN_HEIGHT - 100 }
                     }).start(() => {
@@ -102,6 +105,7 @@ export default class Card extends React.Component {
                 }
                 else if (gestureState.dy > 120) { //DOWN
                     console.log("swiped down")
+                    this.props.onSwipe("down", this.props.info)
                     Animated.spring(this.position, {
                         toValue: { x: gestureState.dx, y: SCREEN_HEIGHT + 100 }
                     }).start(() => {
@@ -165,7 +169,8 @@ export default class Card extends React.Component {
         } else if (this.props.info.kind_of_bet === "spread"){
             return `${this.props.info.away_team_abr} ${this.props.info.away_team_spread}`
         } else{
-            return `OVER ${this.props.info.home_team_spread}`
+            return `OVER`
+            //  this.props.info.home_team_spread}
         }
     }
 
@@ -206,7 +211,7 @@ export default class Card extends React.Component {
                         </Animated.View>
 
                         <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
-                            <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>JETS</Text>
+                            <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>{this.showHiddenLeft}</Text>
                         </Animated.View>
                         <View style={Styles.card}>
                             <View style={Styles.cardImage}>

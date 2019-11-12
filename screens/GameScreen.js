@@ -20,17 +20,16 @@ class GameScreen extends React.Component{
         console.log("sv: ",sliderValue)
         this.setState({
             sliderValue
+        }) 
+    }
+    addPick = (direction, gameObj) =>{
+        let updated = [...this.state.picks, {game: gameObj, direction: direction, confidence: this.state.sliderValue}]
+        this.setState({
+            picks: updated,
+            sliderValue: 5
         })
     }
-
-    // onSwipe(){
-    //     if (left){
-    //         (pass entire GameObj, hometeam picked)
-    //     } else if (right){
-    //         (pass entire GameObj, awayteam picked)
-    //     }
-    //     then remove gameobj from card stack
-    // }
+    
 
     render(){
     return(
@@ -59,14 +58,14 @@ class GameScreen extends React.Component{
                     </View>
                 </View>
                 <View style={styles.gameContainer}>
-                    <CardStack />
+                    <CardStack addPick={this.addPick}/>
                 </View>
                 <View style={styles.container}>
                     {/* <View style={styles.buttonsContainer}>
                     <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
                     </View> */}
-                    <TouchableOpacity onPress={()=>console.log(this.props.navigation.navigate('BetSlip'))} style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('BetSlip')} picks={this.state.picks} style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -144,7 +143,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         textAlign: 'center',
         top: '1200%',
-        left: '20%'
+        left: '20%',
+        zIndex: 9999999
         
     },
     logo: {
