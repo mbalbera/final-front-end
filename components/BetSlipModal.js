@@ -23,18 +23,20 @@ class BetSlipModal extends React.Component {
         totalConfidence: 0
     }
     componentDidMount() {
-        let updated = [...this.props.picks]
+        // let updated = [...this.props.picks]
         let tc = 0
         this.props.picks.forEach(function (bet) {
             tc = tc + bet["confidence"]
         })
         this.setState({
-            bets: updated,
+            // bets: updated,
             totalConfidence: tc
         })
     }
+
+    
     render() {
-        let mapped = this.state.bets.map(bet => <BetRow key={bet.id} bet={bet} totalConfidence={this.state.totalConfidence} slip={this.state.slip} removeHandler={this.removeHandler} />)
+        let mapped = this.props.picks.map(bet => <BetRow key={bet.id} bet={bet} totalConfidence={this.state.totalConfidence} slip={this.state.slip} removeHandler={this.props.removeHandler} />)
         return (
             <Modal
                 animationType="slide"
@@ -45,10 +47,18 @@ class BetSlipModal extends React.Component {
                 <View style={styles.container}>
                     <Header style={styles.header}
                         barStyle={'light-content'}
-                        leftComponent={<DrawerIcon />}
+                        centerComponent={<Text style={{color:'white', fontSize:22}}>Bet Slip</Text>}
                         rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
                     />
                     <ScrollView style={styles.container}>
+                        <View style={styles.heading} >
+                            <View style={styles.splitContainer}>
+                                <Text style={{ width: '24.75%', height: 50, backgroundColor: 'powderblue' }}>Your Pick</Text>
+                                <Text style={{ width: '24.75%', height: 50, backgroundColor: 'skyblue' }}>Opponent</Text>
+                                <Text style={{ width: '24.75%', height: 50, backgroundColor: 'steelblue' }}>Risk</Text>
+                                <Text style={{ width: '24.75%', height: 50, backgroundColor: 'powderblue' }}>To win</Text>
+                            </View>
+                        </View>
                         {mapped}
                     </ScrollView>
                     <View style={styles.buttonsContainer}>
@@ -61,13 +71,6 @@ class BetSlipModal extends React.Component {
                 </View>
             </Modal>
         )
-    }
-    removeHandler = (bObj) => {
-        let updated = this.state.bets.filter(bet => bet.id !== bObj.id)
-        this.setState({
-            bets: updated
-        })
-
     }
     submitHandler = () => {
         console.log("submitting bets")
@@ -91,6 +94,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'rgb(53, 60, 80)',
+    },
+
+    heading: {
+        width: '90%'
     },
 
     mainContainer: {
@@ -125,6 +132,10 @@ const styles = StyleSheet.create({
         zIndex: 88
     },
 
+    splitContainer:{
+        flex: 1,
+        flexDirection: 'row',
+    },
 
     title: {
         fontSize: 27,

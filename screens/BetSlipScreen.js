@@ -29,7 +29,7 @@ class BetSlipScreen extends React.Component {
         })
     }
     render() {
-        console.log(this.props)
+        // console.log(this.props)
         let mapped = this.state.bets.map(bet => <BetRow key={bet.id} bet={bet} slip={this.state.slip} removeHandler={this.removeHandler} />)
         return (
             <View style={styles.container}>

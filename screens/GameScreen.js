@@ -35,6 +35,15 @@ class GameScreen extends React.Component{
             modalVisible: swtch
         })
     }
+    removeHandler = (betId) => {
+        // console.log('betobj: ', betId)
+        // console.log('bets: ', this.state.picks)
+
+        let updated = this.state.picks.filter(bet => bet["game"]["id"] !== betId)
+        this.setState({
+            picks: updated
+        })
+    }
 
     render(){
     return(
@@ -44,7 +53,7 @@ class GameScreen extends React.Component{
                 leftComponent={<DrawerIcon />}
                 rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
             />
-            {this.state.modalVisible ? <BetSlipModal picks={this.state.picks} hideModal={this.showModal} visible={this.state.modalVisible}/> : null}
+            {this.state.modalVisible ? <BetSlipModal picks={this.state.picks} hideModal={this.showModal} visible={this.state.modalVisible} removeHandler={this.removeHandler}/> : null}
             <View style={styles.mainContainer}>
                
                 <View style={styles.midContainer}>
