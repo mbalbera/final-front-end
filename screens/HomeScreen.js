@@ -1,17 +1,20 @@
 import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import DrawerIcon from '../components/DrawerIcon';
-import { Slider, Header } from 'react-native-elements';
-import { Button, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { withNavigation, DrawerActions } from 'react-navigation';
-import { MonoText } from '../components/StyledText';
+import { Header } from 'react-native-elements';
+import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import Categories from '../components/Categories';
-import { white } from 'ansi-colors';
 
 class HomeScreen extends React.Component {
     state= {
       sliderValue: 50
     }
+
+  navigateToGame(sport){
+    // console.log("sport: ", sport)
+    this.navigation.navigate('Game', {sport: sport})
+  }
 
   render(){
     return (
@@ -32,7 +35,7 @@ class HomeScreen extends React.Component {
             // contentContainerStyle={styles.contentContainer}
             >
             <Text style={styles.title}>Categories</Text>
-            <Categories {...this.props}/>
+            <Categories {...this.props} navigateToGame={this.navigateToGame}/>
           <View style={styles.buttonsContainer}>     
               <Button onPress={()=>this.props.navigation.navigate('UserName')} title="Manage My Account"/>
               <Button onPress={() => this.props.navigation.navigate('BetTracker')}title="Track Your Bets"/>

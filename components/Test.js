@@ -154,23 +154,18 @@ export default class Card extends React.Component {
     }
 
     showHiddenLeft(){
-        if (this.props.info.kind_of_bet === "moneyline"){
+        if (this.props.info.kind_of_bet === "moneyline" || this.props.info.kind_of_bet === "spread"){
             return this.props.info.home_team_abr
-        } else if (this.props.info.kind_of_bet === "spread"){
-            return  `${this.props.info.home_team_abr} ${this.props.info.home_team_spread}`
         } else{
             return `UNDER ${this.props.info.home_team_spread}`
         }
     }
 
-    showHiddenRightt(){
-        if (this.props.info.kind_of_bet === "moneyline"){
+    showHiddenRight(){
+        if (this.props.info.kind_of_bet === "moneyline" || this.props.info.kind_of_bet === "spread"){
             return this.props.info.away_team_abr
-        } else if (this.props.info.kind_of_bet === "spread"){
-            return `${this.props.info.away_team_abr} ${this.props.info.away_team_spread}`
         } else{
-            return `OVER`
-            //  this.props.info.home_team_spread}
+            return `OVER ${this.props.info.home_team_spread}`
         }
     }
 
@@ -185,8 +180,8 @@ export default class Card extends React.Component {
         } else if (this.props.info.kind_of_bet === "spread") {
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', }}>
-                    <Text style={{ textAlign: 'center' }}>{this.props.info.home_team_abr} {this.props.info.home_team_spread} {this.props.info.over_home_value}</Text>
-                    <Text style={{ textAlign: 'center' }}>{this.props.info.away_team_abr} {this.props.info.away_team_spread} {this.props.info.under_away_value}</Text>
+                    <Text style={{ textAlign: 'center' }}>{this.props.info.home_team_abr} {this.addPlus(this.props.info.home_team_spread)} {this.props.info.over_home_value}</Text>
+                    <Text style={{ textAlign: 'center' }}>{this.props.info.away_team_abr} {this.addPlus(this.props.info.away_team_spread)} {this.props.info.under_away_value}</Text>
                 </View>
             )
         } else {
@@ -204,14 +199,14 @@ export default class Card extends React.Component {
                         {...this.PanResponder.panHandlers}
                         id={this.props.info.id}  
                         style={[this.rotateAndTranslate, { 
-                            height: SCREEN_HEIGHT - 120, width: SCREEN_WIDTH, padding: 10, position: 'absolute' 
+                            height: SCREEN_HEIGHT - 437 , width: SCREEN_WIDTH, padding: 10, position: 'absolute' 
                             }]}>
-                        <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 1000 }}>
-                            <Text style={{ borderWidth: 1, borderColor: 'blue', color: 'blue', fontSize: 32, fontWeight: '800', padding: 10 }}>GIANTS</Text>
+                        <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 92 }}>
+                            <Text style={{ borderWidth: 1, borderColor: NFL[this.props.info.away_team_abr]["background_color"], color: NFL[this.props.info.away_team_abr]["background_color"], fontSize: 32, fontWeight: '800', padding: 10 }}>{this.showHiddenRight()}</Text>
                         </Animated.View>
 
-                        <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 1000 }}>
-                            <Text style={{ borderWidth: 1, borderColor: 'green', color: 'green', fontSize: 32, fontWeight: '800', padding: 10 }}>{this.showHiddenLeft}</Text>
+                        <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 92 }}>
+                            <Text style={{ borderWidth: 1, borderColor: NFL[this.props.info.home_team_abr]["background_color"], color: NFL[this.props.info.home_team_abr]["background_color"], fontSize: 32, fontWeight: '800', padding: 10 }}>{this.showHiddenLeft()}</Text>
                         </Animated.View>
                         <View style={Styles.card}>
                             <View style={Styles.cardImage}>

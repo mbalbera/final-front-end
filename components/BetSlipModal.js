@@ -12,40 +12,54 @@ import {
     TouchableOpacity,
     Button,
     View,
+    Modal,
 } from 'react-native';
 
-class BetSlipScreen extends React.Component {
+class BetSlipModal extends React.Component {
 
     state = {
         slip: true,
         bets: [],
-        modalVisible: true
+        totalConfidence: 0
     }
-    componentDidMount(){
-
+    componentDidMount() {
         let updated = [...this.props.picks]
+        let tc = 0
+        this.props.picks.forEach(function (bet) {
+            tc = tc + bet["confidence"]
+        })
         this.setState({
-            bets: updated
+            bets: updated,
+            totalConfidence: tc
         })
     }
     render() {
-        console.log(this.props)
-        let mapped = this.state.bets.map(bet => <BetRow key={bet.id} bet={bet} slip={this.state.slip} removeHandler={this.removeHandler} />)
+        let mapped = this.state.bets.map(bet => <BetRow key={bet.id} bet={bet} totalConfidence={this.state.totalConfidence} slip={this.state.slip} removeHandler={this.removeHandler} />)
         return (
-            <View style={styles.container}>
-                <Header style={styles.header}
-                    barStyle={'light-content'}
-                    leftComponent={<DrawerIcon />}
-                    rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
-                />
-                <ScrollView style={styles.container}>
-                    {mapped}
-                </ScrollView>
-                <View style={styles.buttonsContainer}>
-                    <Button style={styles.button} title="Submit" />
-                    <Button style={styles.button} title="Parlay it" />
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={this.state.modalVisible}
+                onRequestClose={() => { Alert.alert('Modal has been closed.') }}
+            >
+                <View style={styles.container}>
+                    <Header style={styles.header}
+                        barStyle={'light-content'}
+                        leftComponent={<DrawerIcon />}
+                        rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
+                    />
+                    <ScrollView style={styles.container}>
+                        {mapped}
+                    </ScrollView>
+                    <View style={styles.buttonsContainer}>
+                        <Button style={styles.button} title="Submit" />
+                        <Button style={styles.button} title="Keep Swiping" 
+                        onPress={() => this.props.hideModal()} 
+                        />
+                        <Button style={styles.button} title="Parlay it" />
+                    </View>
                 </View>
-            </View>
+            </Modal>
         )
     }
     removeHandler = (bObj) => {
@@ -63,13 +77,13 @@ class BetSlipScreen extends React.Component {
     }
 }
 
-BetSlipScreen.navigationOptions = {
+BetSlipModal.navigationOptions = {
     header: null,
     title: 'Home',
     left: <DrawerIcon />
 };
 
-export default withNavigation(BetSlipScreen)
+export default withNavigation(BetSlipModal)
 
 const styles = StyleSheet.create({
 

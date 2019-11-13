@@ -1,14 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
-// const data = [
-//     { key: 5, img_path: require('../assets/images/sport_images/Golf.png') }, { key: 2, img_path: require('../assets/images/sport_images/basketball.png') }, { key: 3, img_path: require('../assets/images/sport_images/boxer.png') }, { key: 4, img_path: require('../assets/images/sport_images/football.png') }
-//     , { key: 1, img_path: require('../assets/images/sport_images/baseball.png') },  { key: 6, img_path: require('../assets/images/sport_images/hockey.png') }, { key: 8, img_path: require('../assets/images/sport_images/soccer.png') }, { key: 7, img_path: require('../assets/images/sport_images/horse.png') },  { key: 9, img_path: require('../assets/images/sport_images/TV.png') }
-// ];
+
 const data = [
-    { key: 5, img_path: require('../assets/images/sport_images/ncaa-logo-football.png') }, { key: 2, img_path: require('../assets/images/sport_images/nba-logo.png') }, { key: 3, img_path: require('../assets/images/sport_images/nhl-logo.png') }, { key: 4, img_path: require('../assets/images/sport_images/horse.png') }
-    , { key: 1, img_path: require('../assets/images/sport_images/nfl-logo.png') }, { key: 6, img_path: require('../assets/images/sport_images/mlb-logo.png') }, { key: 8, img_path: require('../assets/images/sport_images/soccer-logo.png') }, { key: 7, img_path: require('../assets/images/sport_images/ncaa-logo-basketball.png') }, { key: 9, img_path: require('../assets/images/sport_images/pga-logo.png') }
+    { key: 1, img_path: require('../assets/images/sport_images/ncaa-logo-football.png'), sport: 'ncaaf' }, 
+    { key: 2, img_path: require('../assets/images/sport_images/nba-logo.png'), sport: 'nba' }, 
+    { key: 3, img_path: require('../assets/images/sport_images/nhl-logo.png'), sport: 'nhl' }, 
+    { key: 4, img_path: require('../assets/images/sport_images/horse.png'), sport: 'horse' }, 
+    { key: 5, img_path: require('../assets/images/sport_images/nfl-logo.png'), sport: 'nfl' }, 
+    { key: 6, img_path: require('../assets/images/sport_images/mlb-logo.png'), sport: 'mlb' }, 
+    { key: 7, img_path: require('../assets/images/sport_images/soccer-logo.png'), sport: 'soccer' }, 
+    { key: 8, img_path: require('../assets/images/sport_images/ncaa-logo-basketball.png'), sport: 'ncaam' }, 
+    { key: 9, img_path: require('../assets/images/sport_images/pga-logo.png'), sport: 'pga' }
 ];
 
 const formatData = (data, numColumns) => {
@@ -23,36 +27,29 @@ const formatData = (data, numColumns) => {
     return data;
 };
 
+
+
 const numColumns = 3;
 function Categories(props){
    
-    renderItem = ({ item }) => {
-        if (item.empty) {
-            return <View style={[styles.item, styles.itemInvisible]} />;
-        }
-        // console.log('category nav props: ',props.navigation)
-        return (
-            <TouchableOpacity style={styles.item} onPress={() => props.navigation.navigate('Game')}>
-                <Image
-                    style={styles.pics}
-                    source={item.img_path}
-                />
-            </TouchableOpacity>
-        );
-    };
         return (
             <View>
                 <FlatList
-                data={formatData(data, numColumns)}
-                style={styles.container}
-                renderItem={this.renderItem}
-                numColumns={numColumns}
+                    data={formatData(data, numColumns)}
+                    style={styles.container}
+                    renderItem={({ item }) => 
+                        <TouchableOpacity style={styles.item} onPress={() => props.navigateToGame(item.sport)}>
+                            <Image style={styles.pics} source={item.img_path}/>
+                        </TouchableOpacity>
+                    }
+                    numColumns={numColumns}
+                    keyExtractor={item => item.id}
                 />
             </View>
         );
 
 }
-export default Categories 
+export default withNavigation(Categories)
 const styles = StyleSheet.create({
     container: {
         flex: 1,

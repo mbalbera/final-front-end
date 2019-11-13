@@ -2,22 +2,21 @@ import React from 'react'
 import DrawerIcon from '../components/DrawerIcon';
 import { Slider, Header } from 'react-native-elements';
 import { withNavigation} from 'react-navigation';
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ScrollView,Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native';
 import CardStack from '../components/CardStack';
-
+import BetSlipModal from '../components/BetSlipModal'
 
 
 class GameScreen extends React.Component{
     
     state ={
         sliderValue: 5,
-        picks: []
+        picks: [],
+        modalVisible: false,
     }
     
     changeSlider(value){
-        // console.log("v: ",value)
         const sliderValue = Math.floor(value)
-        console.log("sv: ",sliderValue)
         this.setState({
             sliderValue
         }) 
@@ -30,6 +29,12 @@ class GameScreen extends React.Component{
         })
     }
     
+    showModal = () =>{
+        const swtch = !this.state.modalVisible
+        this.setState({
+            modalVisible: swtch
+        })
+    }
 
     render(){
     return(
@@ -39,6 +44,7 @@ class GameScreen extends React.Component{
                 leftComponent={<DrawerIcon />}
                 rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
             />
+            {this.state.modalVisible ? <BetSlipModal picks={this.state.picks} hideModal={this.showModal} visible={this.state.modalVisible}/> : null}
             <View style={styles.mainContainer}>
                
                 <View style={styles.midContainer}>
@@ -65,7 +71,7 @@ class GameScreen extends React.Component{
                     <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
                     </View> */}
-                    <TouchableOpacity onPress={()=>this.props.navigation.navigate('BetSlip')} picks={this.state.picks} style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.showModal()}  style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -144,8 +150,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         top: '1200%',
         left: '20%',
-        zIndex: 9999999
-        
+        zIndex:100        
     },
     logo: {
         height: 80,
