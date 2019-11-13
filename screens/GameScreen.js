@@ -62,7 +62,7 @@ class GameScreen extends React.Component{
                         <Slider
                             style={styles.slider}
                             thumbTintColor='white'
-                            minimumValue={0}
+                            minimumValue={1}
                             maximumValue={10}
                             minimumTrackTintColor="white"
                             maximumTrackTintColor="black"

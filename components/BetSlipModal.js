@@ -20,7 +20,8 @@ class BetSlipModal extends React.Component {
     state = {
         slip: true,
         bets: [],
-        totalConfidence: 0
+        totalConfidence: 0,
+        toggle: true
     }
     componentDidMount() {
         // let updated = [...this.props.picks]
@@ -33,8 +34,19 @@ class BetSlipModal extends React.Component {
             totalConfidence: tc
         })
     }
-
-    
+    componentDidUpdate(prevProps){
+        
+        if(prevProps.picks.length !== this.props.picks.length){
+            let tc = 0
+            this.props.picks.forEach(function (bet) {
+                tc = tc + bet["confidence"]
+            })
+            this.setState({
+                // bets: updated,
+                totalConfidence: tc
+            })
+        }
+    }
     render() {
         let mapped = this.props.picks.map(bet => <BetRow key={bet.id} bet={bet} totalConfidence={this.state.totalConfidence} slip={this.state.slip} removeHandler={this.props.removeHandler} />)
         return (
@@ -47,7 +59,7 @@ class BetSlipModal extends React.Component {
                 <View style={styles.container}>
                     <Header style={styles.header}
                         barStyle={'light-content'}
-                        centerComponent={<Text style={{color:'white', fontSize:22}}>Bet Slip</Text>}
+                        centerComponent={<Text style={{color:'white', fontSize:22}}>Betslip</Text>}
                         rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
                     />
                     <ScrollView style={styles.container}>
