@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 27,
-    color: 'rgb(225,225,225)',
+    color: 'rgb(211,215,225)',
     lineHeight: 27,
     textAlign: 'center',
   },
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   appTitle:{
     fontSize: 36,
-    color: 'white'
+    color: 'rgb(211,215,225)'
   }
 });
 

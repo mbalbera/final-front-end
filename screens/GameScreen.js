@@ -78,7 +78,7 @@ class GameScreen extends React.Component{
                         <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
                         </View> */}
-                        <TouchableOpacity onPress={() => this.showModal()}  style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.showModal()} style={styles.betslip_button}><Text style={styles.betSlipText}>Bet Slip</Text></TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -106,6 +106,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'rgb(53, 60, 80)',
+    },
+
+    betSlipText:{
+        textAlign: 'center', 
+        fontSize: 18, 
+        color: 'white'
     },
 
     mainContainer:{

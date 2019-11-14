@@ -4,15 +4,15 @@ import { withNavigation } from 'react-navigation';
 
 
 const data = [
-    { key: 1, img_path: require('../assets/images/sport_images/ncaa-logo-football.png'), sport: 'ncaaf' }, 
+    { key: 1, img_path: require('../assets/images/sport_images/ncaa-football-logo.png'), sport: 'ncaaf' }, 
     { key: 2, img_path: require('../assets/images/sport_images/nba-logo.png'), sport: 'nba' }, 
     { key: 3, img_path: require('../assets/images/sport_images/nhl-logo.png'), sport: 'nhl' }, 
-    { key: 4, img_path: require('../assets/images/sport_images/horse.png'), sport: 'horse' }, 
+    { key: 4, img_path: require('../assets/images/sport_images/ufc-logo.png'), sport: 'ufc' }, 
     { key: 5, img_path: require('../assets/images/sport_images/nfl-logo.png'), sport: 'nfl' }, 
     { key: 6, img_path: require('../assets/images/sport_images/mlb-logo.png'), sport: 'mlb' }, 
-    { key: 7, img_path: require('../assets/images/sport_images/soccer-logo.png'), sport: 'soccer' }, 
-    { key: 8, img_path: require('../assets/images/sport_images/ncaa-logo-basketball.png'), sport: 'ncaam' }, 
-    { key: 9, img_path: require('../assets/images/sport_images/pga-logo.png'), sport: 'pga' }
+    { key: 7, img_path: require('../assets/images/sport_images/mls-logo.png'), sport: 'mls' }, 
+    { key: 8, img_path: require('../assets/images/sport_images/ncaa-basketball-logo.png'), sport: 'ncaam' }, 
+    { key: 9, img_path: require('../assets/images/sport_images/wnba-logo.png'), sport: 'wnba' }
 ];
 
 const formatData = (data, numColumns) => {
@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
     item: {
-        backgroundColor: 'rgb(91,95,105)',
+        // backgroundColor: 'rgb(91,95,105)',
+        backgroundColor: 'rgb(191,195,205)',
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,

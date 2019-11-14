@@ -4,6 +4,7 @@ import Styles from './Styles.js';
 import NFL from './NFLTeamInfo'
 import NHL from './NHLTeamInfo'
 import NBA from './NBATeamInfo'
+import NCAA from './NCAATeamInfo'
 import { onSessionWasInterrupted } from 'expo/build/AR';
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -157,6 +158,14 @@ export default class Card extends React.Component {
                 homeTeamBackground = NBA[this.props.info.home_team_abr]["background_color"]
                 awayTeamBackground = NBA[this.props.info.away_team_abr]["background_color"]
                 break
+            case "ncaaf" || "ncaam":
+                homeTeamImg = NCAA[this.props.info.home_team_abr]["img_path"]
+                awayTeamImg = NCAA[this.props.info.away_team_abr]["img_path"]
+                // homeTeamBackground = NCAA[this.props.info.home_team_abr]["background_color"]
+                // awayTeamBackground = NCAA[this.props.info.away_team_abr]["background_color"]
+                homeTeamBackground = 'black'
+                awayTeamBackground = 'grey'
+                break
 
         }
         this.setState({
@@ -201,6 +210,19 @@ export default class Card extends React.Component {
         }
     }
 
+    formatDate(){
+        let hour
+        let month = this.props.info.time.slice(5,7)
+        let day = this.props.info.time.slice(8,10)
+        if (parseInt(this.props.info.time.slice(11, 13)) > 17){
+            hour = parseInt(this.props.info.time.slice(11, 13)) - 17
+        }else{
+            hour = parseInt(this.props.info.time.slice(11, 13)) + 7
+        }
+        let minute = this.props.info.time.slice(14, 16)
+        return (<Text style={{ textAlign: 'center' }}>{month}/{day}  {hour}:{minute} </Text> )
+    }
+
     displayTeamLine() {
         if (this.props.info.kind_of_bet === "moneyline") {
             return (
@@ -226,10 +248,8 @@ export default class Card extends React.Component {
     }
 
     render (){
-        // console.log("home: ", this.state.homeTeamImg)
-        // console.log("away: ", this.state.awayTeamImg)
-        // console.log("home: ", this.state.homeTeamBackground)
-        // console.log("away: ", this.state.awayTeamBackground)
+        // console.log(this.props.info.time)
+        
                 return (
                     <Animated.View 
                         {...this.PanResponder.panHandlers}
@@ -255,7 +275,7 @@ export default class Card extends React.Component {
                             </View>
                             <View style={Styles.cardText}>
                                 <Text style={Styles.cardTextMain}>{`${this.props.info.home_team_abr} VS ${this.props.info.away_team_abr}`}</Text>
-                                <Text></Text>
+                                {this.formatDate()}
                                 {this.displayType()}
                                 {this.displayTeamLine()}
                             </View>
