@@ -2,7 +2,8 @@
 import { FETCH_USERS } from "../constants/actionCreators";
 
 const INIT_STATE = {
-    user: []
+    user: [],
+    sport: ""
 };
 
 function UserReducer(state = INIT_STATE, action) {
@@ -11,6 +12,8 @@ function UserReducer(state = INIT_STATE, action) {
         //     return { ...state, users: action.payload };
         //     break;
 
+        case "CHANGE_SPORT":
+            return {...state, sport: action.payload}
         default:
             return state;
             break;

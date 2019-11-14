@@ -6,6 +6,9 @@ import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 're
 import { withNavigation } from 'react-navigation';
 import Categories from '../components/Categories';
 
+import { setSport } from '../actions/authActions'
+import { connect } from 'react-redux'
+
 class HomeScreen extends React.Component {
     state= {
       sliderValue: 50
@@ -13,7 +16,8 @@ class HomeScreen extends React.Component {
 
   navigateToGame(sport){
     // console.log("sport: ", sport)
-    this.navigation.navigate('Game', {sport: sport})
+    this.setSport(sport)
+    this.navigation.navigate('Game', {sport: "beef"})
   }
 
   render(){
@@ -52,7 +56,7 @@ HomeScreen.navigationOptions = {
   left: <DrawerIcon/>
 };
 
-export default withNavigation(HomeScreen)
+export default connect(null, { setSport } )(withNavigation(HomeScreen))
 
 
 const styles = StyleSheet.create({

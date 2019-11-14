@@ -6,6 +6,7 @@ import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native';
 import CardStack from '../components/CardStack';
 import BetSlipModal from '../components/BetSlipModal'
 
+import { connect } from 'react-redux'
 
 class GameScreen extends React.Component{
     
@@ -36,9 +37,6 @@ class GameScreen extends React.Component{
         })
     }
     removeHandler = (betId) => {
-        // console.log('betobj: ', betId)
-        // console.log('bets: ', this.state.picks)
-
         let updated = this.state.picks.filter(bet => bet["game"]["id"] !== betId)
         this.setState({
             picks: updated
@@ -46,45 +44,45 @@ class GameScreen extends React.Component{
     }
 
     render(){
-    return(
-        <View style={styles.container}>
-            <Header style={styles.header}
-                barStyle={'light-content'}
-                leftComponent={<DrawerIcon />}
-                rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
-            />
-            {this.state.modalVisible ? <BetSlipModal picks={this.state.picks} hideModal={this.showModal} visible={this.state.modalVisible} removeHandler={this.removeHandler}/> : null}
-            <View style={styles.mainContainer}>
-               
-                <View style={styles.midContainer}>
+        return(
+            <View style={styles.container}>
+                <Header style={styles.header}
+                    barStyle={'light-content'}
+                    leftComponent={<DrawerIcon />}
+                    rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
+                />
+                {this.state.modalVisible ? <BetSlipModal picks={this.state.picks} hideModal={this.showModal} visible={this.state.modalVisible} removeHandler={this.removeHandler}/> : null}
+                <View style={styles.mainContainer}>
+                
+                    <View style={styles.midContainer}>
+                        <View style={styles.container}>
+                            <Text style={styles.title}>Confidence Meter: </Text>
+                            <Slider
+                                style={styles.slider}
+                                thumbTintColor='white'
+                                minimumValue={1}
+                                maximumValue={10}
+                                minimumTrackTintColor="white"
+                                maximumTrackTintColor="black"
+                                value={this.state.sliderValue}
+                                onValueChange={(value)=>this.changeSlider(value)}
+                                />
+                            <Text style={styles.title}>{this.state.sliderValue}/10</Text>
+                        </View>
+                    </View>
+                    <View style={styles.gameContainer}>
+                        <CardStack addPick={this.addPick} sport={this.props.sport}/>
+                    </View>
                     <View style={styles.container}>
-                        <Text style={styles.title}>Confidence Meter: </Text>
-                        <Slider
-                            style={styles.slider}
-                            thumbTintColor='white'
-                            minimumValue={1}
-                            maximumValue={10}
-                            minimumTrackTintColor="white"
-                            maximumTrackTintColor="black"
-                            value={this.state.sliderValue}
-                            onValueChange={(value)=>this.changeSlider(value)}
-                            />
-                        <Text style={styles.title}>{this.state.sliderValue}/10</Text>
+                        {/* <View style={styles.buttonsContainer}>
+                        <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
+                        </View> */}
+                        <TouchableOpacity onPress={() => this.showModal()}  style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.gameContainer}>
-                    <CardStack addPick={this.addPick}/>
-                </View>
-                <View style={styles.container}>
-                    {/* <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
-                    </View> */}
-                    <TouchableOpacity onPress={() => this.showModal()}  style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
-                </View>
             </View>
-        </View>
-    );
+        );
     }
 }
 
@@ -94,7 +92,13 @@ GameScreen.navigationOptions = {
     left: <DrawerIcon />
 };
 
-export default withNavigation(GameScreen)
+function msp(state){
+    return {
+        sport: state.user.sport
+    }
+}
+
+export default connect(msp)(withNavigation(GameScreen))
 
 const styles = StyleSheet.create({
 

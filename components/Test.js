@@ -2,6 +2,8 @@ import React from 'react'
 import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder } from 'react-native';
 import Styles from './Styles.js';
 import NFL from './NFLTeamInfo'
+import NHL from './NHLTeamInfo'
+import NBA from './NBATeamInfo'
 import { onSessionWasInterrupted } from 'expo/build/AR';
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -16,7 +18,9 @@ export default class Card extends React.Component {
         this.state = {
             currentIndex: 0,
             homeTeamImg: "",
-            awayTeamImg: ""
+            awayTeamImg: "",
+            homeTeamBackground: "black",
+            awayTeamBackground: "black"
         }
 
         this.rotate = this.position.x.interpolate({
@@ -128,12 +132,40 @@ export default class Card extends React.Component {
     }
 
     getImages() {
-        const homeTeamImg = NFL[this.props.info.home_team_abr]["img_path"]
-        const awayTeamImg = NFL[this.props.info.away_team_abr]["img_path"]
+        let homeTeamImg
+        let awayTeamImg
+        let homeTeamBackground
+        let awayTeamBackground
+        console.log(this.props.sport)
+        switch (this.props.sport){
+            case "nfl" :
+                // console.log(NFL[this.props.info.home_team_abr]["img_path"])
+                homeTeamImg = NFL[this.props.info.home_team_abr]["img_path"]
+                awayTeamImg = NFL[this.props.info.away_team_abr]["img_path"]
+                homeTeamBackground = NFL[this.props.info.home_team_abr]["background_color"]
+                awayTeamBackground = NFL[this.props.info.away_team_abr]["background_color"]
+                break
+            case "nhl" : 
+                homeTeamImg = NHL[this.props.info.home_team_abr]["img_path"]
+                awayTeamImg = NHL[this.props.info.away_team_abr]["img_path"]
+                homeTeamBackground = NHL[this.props.info.home_team_abr]["background_color"]
+                awayTeamBackground = NHL[this.props.info.away_team_abr]["background_color"]
+                break
+            case "nba" : 
+                homeTeamImg = NBA[this.props.info.home_team_abr]["img_path"]
+                awayTeamImg = NBA[this.props.info.away_team_abr]["img_path"]
+                homeTeamBackground = NBA[this.props.info.home_team_abr]["background_color"]
+                awayTeamBackground = NBA[this.props.info.away_team_abr]["background_color"]
+                break
+
+        }
         this.setState({
             homeTeamImg: homeTeamImg,
-            awayTeamImg: awayTeamImg
+            awayTeamImg: awayTeamImg,
+            homeTeamBackground: homeTeamBackground,
+            awayTeamBackground: awayTeamBackground
         })
+        
     }
 
     displayType() {
@@ -194,6 +226,10 @@ export default class Card extends React.Component {
     }
 
     render (){
+        // console.log("home: ", this.state.homeTeamImg)
+        // console.log("away: ", this.state.awayTeamImg)
+        // console.log("home: ", this.state.homeTeamBackground)
+        // console.log("away: ", this.state.awayTeamBackground)
                 return (
                     <Animated.View 
                         {...this.PanResponder.panHandlers}
@@ -202,18 +238,18 @@ export default class Card extends React.Component {
                             height: SCREEN_HEIGHT - 437 , width: SCREEN_WIDTH, padding: 10, position: 'absolute' 
                             }]}>
                         <Animated.View style={{ opacity: this.likeOpacity, transform: [{ rotate: '-30deg' }], position: 'absolute', top: 50, left: 40, zIndex: 92 }}>
-                            <Text style={{ borderWidth: 1, borderColor: NFL[this.props.info.away_team_abr]["background_color"], color: NFL[this.props.info.away_team_abr]["background_color"], fontSize: 32, fontWeight: '800', padding: 10 }}>{this.showHiddenRight()}</Text>
+                            <Text style={{ borderWidth: 1, borderColor: this.state.awayTeamBackground, color: this.state.awayTeamBackground, fontSize: 32, fontWeight: '800', padding: 10 }}>{this.showHiddenRight()}</Text>
                         </Animated.View>
 
                         <Animated.View style={{ opacity: this.dislikeOpacity, transform: [{ rotate: '30deg' }], position: 'absolute', top: 50, right: 40, zIndex: 92 }}>
-                            <Text style={{ borderWidth: 1, borderColor: NFL[this.props.info.home_team_abr]["background_color"], color: NFL[this.props.info.home_team_abr]["background_color"], fontSize: 32, fontWeight: '800', padding: 10 }}>{this.showHiddenLeft()}</Text>
+                            <Text style={{ borderWidth: 1, borderColor: this.state.homeTeamBackground, color: this.state.homeTeamBackground, fontSize: 32, fontWeight: '800', padding: 10 }}>{this.showHiddenLeft()}</Text>
                         </Animated.View>
                         <View style={Styles.card}>
                             <View style={Styles.cardImage}>
-                                <View style={{ width: '50%', backgroundColor: NFL[this.props.info.home_team_abr]["background_color"] }}>
+                                <View style={{ width: '50%', backgroundColor: this.state.homeTeamBackground }}>
                                     <Image source={this.state.homeTeamImg} style={Styles.teamLogo} />
                                 </View>
-                                <View style={{ width: '50%', backgroundColor: NFL[this.props.info.away_team_abr]["background_color"] }}>
+                                <View style={{ width: '50%', backgroundColor: this.state.awayTeamBackground }}>
                                     <Image source={this.state.awayTeamImg} style={Styles.teamLogo} />
                                 </View>
                             </View>

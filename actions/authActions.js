@@ -1,10 +1,5 @@
-import {
-    USER_SIGN_UP,
-    USER_LOGIN,
-    FETCH_USER
-} from "../Constants/actionCreators";
+
 import { AsyncStorage } from "react-native";
-import { fetchUserPlans } from "./invite";
 
 export function userSignUp(user) {
     return function (dispatch) {
@@ -74,4 +69,8 @@ export function getUserProfile(id) {
                 dispatch({ type: FETCH_USER, payload: data });
             });
     };
+}
+
+export function setSport(sport){
+    return {type: "CHANGE_SPORT", payload: sport}
 }
