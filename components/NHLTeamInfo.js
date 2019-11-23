@@ -46,7 +46,7 @@ const NHL = {
     },
     "EDM" : {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/EDM.png'),
-        background_color: 'rgb(4,30,66)'
+        background_color: 'rgb(252,76,0)'
     },
     "FLA": {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/FLA.png'),
@@ -90,7 +90,7 @@ const NHL = {
     },
     "PIT" : {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/PIT.png'),
-        background_color: 'rgb(0,0,0)'
+        background_color: 'rgb(252,181,20)'
     },
     "SJ" : {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/SJ.png'),
@@ -116,8 +116,9 @@ const NHL = {
     },
     "LAS": {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/LAS.png'),
-        background_color: 'rgb(51,63,72)',
+        // background_color: 'rgb(51,63,72)',
         // background_color: 'rgb(185,151,91)',
+        background_color: 'rgb(17,17,17)',
     },
     "WPG" : {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/WPG.png'),

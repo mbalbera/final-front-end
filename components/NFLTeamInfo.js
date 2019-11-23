@@ -5,7 +5,8 @@ const NFL= {
    },
    "ATL": {
         img_path:require('../assets/images/sport_images/NFL_LOGOS/ATL.png'),
-        background_color:'rgb(167,25,48)'
+     //    background_color:'rgb(167,25,48)',
+        background_color:'rgb(0,0,0)'
    },
    "BAL": {
         img_path:require('../assets/images/sport_images/NFL_LOGOS/BAL.png'),
@@ -17,7 +18,8 @@ const NFL= {
    },
    "CAR": {
         img_path:require('../assets/images/sport_images/NFL_LOGOS/CAR.png'),
-        background_color:'rgb(0,133,202)'
+     //    background_color:'rgb(0,133,202)'
+        background_color:'rgb(17,17,17)'
    },
    "CHI": {
         img_path:require('../assets/images/sport_images/NFL_LOGOS/CHI.png'),
@@ -57,7 +59,7 @@ const NFL= {
    },
    "JAX": {
         img_path:require('../assets/images/sport_images/NFL_LOGOS/JAX.png'),
-        background_color:'rgb(16,24,32)'
+        background_color:'rgb(215,162,42)'
    },
    "KC": {
         img_path:require('../assets/images/sport_images/NFL_LOGOS/KC.png'),
@@ -89,7 +91,8 @@ const NFL= {
    },
    "NYG": {
         img_path:require('../assets/images/sport_images/NFL_LOGOS/NYG.png'),
-        background_color:'rgb(0,34,68)'
+     //    background_color:'rgb(0,34,68)',
+        background_color:'rgb(13,36,99)'
      },
    "NYJ": {
          img_path:require('../assets/images/sport_images/NFL_LOGOS/NYJ.png'),
@@ -117,7 +120,8 @@ const NFL= {
    },
    "TB": {
         img_path:require('../assets/images/sport_images/NFL_LOGOS/TB.png'),
-        background_color:'rgb(10,10,8)'
+     //    background_color:'rgb(10,10,8)',
+        background_color:'rgb(213,10,10)'
    },
    "TEN": {
         img_path:require('../assets/images/sport_images/NFL_LOGOS/TEN.png'),

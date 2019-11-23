@@ -10,6 +10,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import RulesScreen from '../screens/RulesScreen';
 import GameScreen from '../screens/GameScreen'
 import BetSlipScreen from '../screens/BetSlipScreen'
+import AddFundsScreen from '../screens/AddFundsScreen'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -134,6 +135,30 @@ BetTracker.navigationOptions = {
 BetTracker.path = '';
 
 
+const AddFunds = createStackNavigator(
+  {
+    AddFunds: AddFundsScreen
+  },
+  config
+);
+
+AddFunds.navigationOptions = {
+  tabBarLabel: 'Home',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
+AddFunds.path = '';
+
+
 
 const Rules = createStackNavigator(
   {
@@ -184,11 +209,13 @@ Settings.path = '';
 const mainDrawer = createDrawerNavigator({
   Home,
   UserName,
-  BetTracker,
+  AddFunds,
   Settings,
   Rules,
   Game,
-  BetSlip
+  // BetSlip,
+  // BetTracker,
+  
 })
 mainDrawer.path = '';
 

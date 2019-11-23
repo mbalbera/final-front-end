@@ -2,7 +2,7 @@ const NBA = {
 
     "ATL": {
         img_path: require('../assets/images/sport_images/NBA_LOGOS/ATL.png'),
-        background_color: 'rgb(225,68,52)'
+        background_color: 'rgb(222,60,67)'
     },
     "BKN": {
         img_path: require('../assets/images/sport_images/NBA_LOGOS/BKN.png'),
@@ -72,7 +72,7 @@ const NBA = {
         img_path: require('../assets/images/sport_images/NBA_LOGOS/MIN.png'),
         background_color: 'rgb(35,97,146)'
     },
-    "NOP": {
+    "NO": {
         img_path: require('../assets/images/sport_images/NBA_LOGOS/NOP.png'),
         background_color: 'rgb(0,22,65)'
     },
@@ -94,7 +94,8 @@ const NBA = {
     },
     "PHX": {
         img_path: require('../assets/images/sport_images/NBA_LOGOS/PHX.png'),
-        background_color: 'rgb(229,95,32)'
+        background_color: 'rgb(29,17,96)'
+        // background_color: 'rgb(229,95,32)'
     },
     "POR": {
         img_path: require('../assets/images/sport_images/NBA_LOGOS/POR.png'),

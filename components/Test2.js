@@ -176,30 +176,11 @@ export default class Card extends React.Component {
     }
 
     displayType() {
-        if (this.props.info.kind_of_bet === "moneyline") {
-            return (
-                <Text style={{ textAlign: 'center' }}>
-                    Who will win this game?
+        return (
+            <Text style={{ textAlign: 'center' }}>
+                {this.props.info.kind_of_bet.charAt(0).toUpperCase() + this.props.info.kind_of_bet.slice(1)}
             </Text>
-            )
-        } else if (this.props.info.kind_of_bet === "spread") {
-            return (
-                <Text style={{ textAlign: 'center' }}>
-                    {this.props.info.home_team_spread > 0 ? `Will ${this.props.info.home_team_name} win by ${this.props.info.home_team_spread}?` : `Will ${this.props.info.away_team_name} win by ${this.props.info.away_team_spread}?`}
-                </Text>
-            )
-        } else {
-            return (
-                <Text style={{ textAlign: 'center' }}>
-                    Will both teams final score be
-                </Text>
-            )
-        }
-        // return (
-        //     <Text style={{ textAlign: 'center' }}>
-        //         {this.props.info.kind_of_bet.charAt(0).toUpperCase() + this.props.info.kind_of_bet.slice(1)} 
-        //     </Text>
-        // )
+        )
     }
 
     addPlus(n) {
@@ -251,14 +232,14 @@ export default class Card extends React.Component {
         } else if (this.props.info.kind_of_bet === "spread") {
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', }}>
-                    <Text style={{ textAlign: 'center' }}>{this.props.info.home_team_abr} {this.addPlus(this.props.info.away_team_spread)}   {this.addPlus(this.props.info.over_home_value)}</Text>
-                    <Text style={{ textAlign: 'center' }}>{this.props.info.away_team_abr} {this.addPlus(this.props.info.home_team_spread)}   {this.addPlus(this.props.info.under_away_value)}</Text>
+                    <Text style={{ textAlign: 'center' }}>{this.props.info.home_team_abr} {this.addPlus(this.props.info.away_team_spread)} {this.addPlus(this.props.info.over_home_value)}</Text>
+                    <Text style={{ textAlign: 'center' }}>{this.props.info.away_team_abr} {this.addPlus(this.props.info.home_team_spread)} {this.addPlus(this.props.info.under_away_value)}</Text>
                 </View>
             )
         } else {
             return (
                 <View>
-                    <Text style={{ textAlign: 'center' }}>Over/Under {this.props.info.home_team_spread}?</Text>
+                    <Text style={{ textAlign: 'center' }}>Over/Under {this.props.info.home_team_spread} Points</Text>
                 </View>
             )
         }
