@@ -1,4 +1,4 @@
-import * as WebBrowser from 'expo-web-browser';
+// import * as WebBrowser from 'expo-web-browser';
 import React from 'react';
 import DrawerIcon from '../components/DrawerIcon';
 import { Header } from 'react-native-elements';
@@ -17,7 +17,7 @@ class HomeScreen extends React.Component {
 
   navigateToGame(sport){
     this.setSport(sport)
-    this.navigation.navigate('Game', {sport: "beef"})
+    this.navigation.navigate('Game', {sport: "beef"}) // sets redux sport to sport
   }
 
   // chooseMultipleSports = () => { 
