@@ -11,6 +11,8 @@ import RulesScreen from '../screens/RulesScreen';
 import GameScreen from '../screens/GameScreen'
 import BetSlipScreen from '../screens/BetSlipScreen'
 import AddFundsScreen from '../screens/AddFundsScreen'
+import SignInScreen from '../screens/SignInScreen'
+import SignUpScreen from '../screens/SignInScreen'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },

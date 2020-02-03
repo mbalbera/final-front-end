@@ -4,12 +4,12 @@ import DrawerIcon from '../components/DrawerIcon';
 import { Header } from 'react-native-elements';
 import BetRow from '../components/BetRow'
 import {
-    Image,
-    Platform,
+    // Image,
+    // Platform,
     ScrollView,
     StyleSheet,
     Text,
-    TouchableOpacity,
+    // TouchableOpacity,
     Button,
     View,
     Modal,
@@ -48,7 +48,7 @@ class BetSlipModal extends React.Component {
         }
     }
     render() {
-        let mapped = this.props.picks.map(bet => <BetRow key={bet.id} bet={bet} totalConfidence={this.state.totalConfidence} slip={this.state.slip} removeHandler={this.props.removeHandler} />)
+        let mapped = this.props.picks.map((bet, index) => <BetRow key={bet.id} bet={bet} totalConfidence={this.state.totalConfidence} index={index} slip={this.state.slip} removeHandler={this.props.removeHandler} />)
         return (
             <Modal
                 animationType="slide"
@@ -62,17 +62,20 @@ class BetSlipModal extends React.Component {
                         centerComponent={<Text style={{color:'white', fontSize:22}}>Betslip</Text>}
                         rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
                     />
-                    <ScrollView style={styles.container}>
+                    <View style={styles.container}>
                         <View style={styles.heading} >
                             <View style={styles.splitContainer}>
-                                <Text style={{ width: '24.75%', height: 50, backgroundColor: 'powderblue' }}>Your Pick</Text>
-                                <Text style={{ width: '24.75%', height: 50, backgroundColor: 'skyblue' }}>Opponent</Text>
-                                <Text style={{ width: '24.75%', height: 50, backgroundColor: 'steelblue' }}>Risk</Text>
-                                <Text style={{ width: '24.75%', height: 50, backgroundColor: 'powderblue' }}>To win</Text>
+                                <Text style={styles.headingText}>Your Pick</Text>
+                                <Text style={styles.headingText}>Opponent</Text>
+                                <Text style={styles.headingText}>Risk</Text>
+                                <Text style={styles.headingText}>To win</Text>
+                                <Text style={styles.headingText}>Remove</Text>
                             </View>
                         </View>
+                        <ScrollView style={{paddingTop: 50, zIndex: -2}}>
                         {mapped}
-                    </ScrollView>
+                        </ScrollView>
+                    </View>
                     <View style={styles.buttonsContainer}>
                         <Button style={styles.button} title="Submit" />
                         <Button style={styles.button} title="Keep Swiping" 
@@ -108,8 +111,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgb(53, 60, 80)',
     },
 
-    heading: {
-        width: '90%'
+    headingText:{
+        height: 50,
+        backgroundColor: 'lightgrey',
+        width: '20%',
+        textAlign: 'center'
     },
 
     mainContainer: {

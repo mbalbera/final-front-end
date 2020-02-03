@@ -7,15 +7,15 @@ function renderPick(props){
         if (props.bet.direction === "left"){
             return (
                 <View style={styles.container}>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'powderblue' }}>Over {props.bet.game.home_team_spread}</Text>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'skyblue' }}>{props.bet.game.home_team_abr}/{props.bet.game.away_team_abr}</Text>
+                    <Text style={styles.text}>Over {props.bet.game.home_team_spread}</Text>
+                    <Text style={styles.text}>{props.bet.game.home_team_abr}/{props.bet.game.away_team_abr}</Text>
                 </View>
             )
         } else {
             return (
                 <View style={styles.container}>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'powderblue' }}>Under {props.bet.game.home_team_spread}</Text>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'skyblue' }}>{props.bet.game.home_team_abr}/{props.bet.game.away_team_abr}</Text>
+                    <Text style={styles.text}>Under {props.bet.game.home_team_spread}</Text>
+                    <Text style={styles.text}>{props.bet.game.home_team_abr}/{props.bet.game.away_team_abr}</Text>
                 </View>
             )        
         }
@@ -23,32 +23,40 @@ function renderPick(props){
         if (props.bet.direction === "left"){
             return (
                 <View style={styles.container}>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'powderblue' }}>{props.bet.game.home_team_abr}</Text>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'skyblue' }}>{props.bet.game.away_team_abr}</Text>
+                    <Text style={styles.text}>{props.bet.game.home_team_abr}</Text>
+                    <Text style={styles.text}>{props.bet.game.away_team_abr}</Text>
                 </View>
         )} else{
             return(
                 <View style={styles.container}>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'powderblue' }}>{props.bet.game.home_team_abr}</Text>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'skyblue' }}>{props.bet.game.away_team_abr}</Text>
+                    <Text style={styles.text}>{props.bet.game.home_team_abr}</Text>
+                    <Text style={styles.text}>{props.bet.game.away_team_abr}</Text>
                 </View>
         )}
     } else{ //SPREAD
         if (props.bet.direction === "left") {
             return (
                 <View style={styles.container}>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'powderblue' }}>{props.bet.game.home_team_spread > 0 ? `${props.bet.game.home_team_abr} +${props.bet.game.home_team_spread}` : `${props.bet.game.home_team_abr} ${props.bet.game.home_team_spread}`}</Text>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'skyblue' }}>{props.bet.game.away_team_abr}</Text>
+                    <Text style={styles.text}>{props.bet.game.home_team_spread > 0 ? `${props.bet.game.home_team_abr} +${props.bet.game.home_team_spread}` : `${props.bet.game.home_team_abr} ${props.bet.game.home_team_spread}`}</Text>
+                    <Text style={styles.text}>{props.bet.game.away_team_abr}</Text>
                 </View>
             )
         } else {
             return (
                 <View style={styles.container}>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'powderblue' }}>{props.bet.game.away_team_spread > 0 ? `${props.bet.game.away_team_abr} +${props.bet.game.away_team_spread}` : `${props.bet.game.away_team_abr} ${props.bet.game.away_team_spread}`}</Text>
-                    <Text style={{ width: '50%', height: 50, backgroundColor: 'skyblue' }}>{props.bet.game.home_team_abr}</Text>
+                    <Text style={styles.text}>{props.bet.game.away_team_spread > 0 ? `${props.bet.game.away_team_abr} +${props.bet.game.away_team_spread}` : `${props.bet.game.away_team_abr} ${props.bet.game.away_team_spread}`}</Text>
+                    <Text style={styles.text}>{props.bet.game.home_team_abr}</Text>
                 </View>
             )
         }
+    }
+}
+
+function backgrounder(id){
+    if (id % 2 === 0){
+        return 'grey'
+    } else{
+        return 'darkgrey'
     }
 }
 
@@ -72,8 +80,8 @@ function renderRiskWin(props){
     // console.log("line: ", line)
     return (
         <View style={styles.container}>
-            <Text style={{ width: '50%', height: 50, backgroundColor: 'steelblue' }}>{parseFloat(risk).toFixed(2)}</Text>
-            <Text style={{ width: '50%', height: 50, backgroundColor: 'powderblue' }}>{parseFloat(win).toFixed(2)}</Text>
+            <Text style={styles.text}>{parseFloat(risk).toFixed(2)}</Text>
+            <Text style={styles.text}>{parseFloat(win).toFixed(2)}</Text>
         </View>
     )
 }
@@ -81,12 +89,12 @@ function renderRiskWin(props){
 
 
 function BetRow(props){
-    // console.log('betrow props: ', props)
+    // console.log('betrow props: ', props.index)
         return (
-            <View style={styles.container}>
+            <View style={{...styles.container,backgroundColor:backgrounder(props.index) }}>
                 {renderPick(props)}
                 {renderRiskWin(props)}
-                {!props.slip ? <Text style={{ width: '20%', height: 50, backgroundColor: 'skyblue' }}>{props.bet.status}</Text> : <Button onPress={() => props.removeHandler(props.bet.game.id)} title="❌"/>}
+                {!props.slip ? <Text style={{ width: '20%', height: 50 }}>{props.bet.status}</Text> : <Button onPress={() => props.removeHandler(props.bet.game.id)} title="❌"/>}
             </View>
         )}
 
@@ -97,4 +105,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
     },
+    text:{
+        width: '50%', 
+        height: 50,
+        textAlign: 'center',
+    
+    }
 })
