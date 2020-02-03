@@ -29,7 +29,7 @@ class GameScreen extends React.Component{
             sliderValue: 5
         })
     }
-    
+
     showModal = () =>{
         const swtch = !this.state.modalVisible
         this.setState({

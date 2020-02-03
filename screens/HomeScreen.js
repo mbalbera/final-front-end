@@ -11,14 +11,19 @@ import { connect } from 'react-redux'
 
 class HomeScreen extends React.Component {
     state= {
-      sliderValue: 50
+      sliderValue: 50,
+      sports = []
     }
 
   navigateToGame(sport){
-    // console.log("sport: ", sport)
     this.setSport(sport)
     this.navigation.navigate('Game', {sport: "beef"})
   }
+
+  chooseMultipleSports = () => { 
+    console.log(this.state.sports)
+  }
+
 
   render(){
     return (
@@ -44,6 +49,9 @@ class HomeScreen extends React.Component {
               <Button onPress={()=>this.props.navigation.navigate('UserName')} title="Manage My Account"/>
               <Button onPress={() => this.props.navigation.navigate('BetTracker')}title="Track Your Bets"/>
           </View>
+          {/* <View style={styles.buttonsContainer}>
+            <Button onPress={() => this.chooseMultipleSports()} title="Start" />
+          </View> */}
       </ScrollView>
     </View>
   );
