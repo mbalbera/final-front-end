@@ -20,9 +20,9 @@ class HomeScreen extends React.Component {
     this.navigation.navigate('Game', {sport: "beef"})
   }
 
-  chooseMultipleSports = () => { 
-    console.log(this.state.sports)
-  }
+  // chooseMultipleSports = () => { 
+  //   console.log(this.state.sports)
+  // }
 
 
   render(){
