@@ -64,7 +64,14 @@ function renderRiskWin(props){
     
     let line
     let win
-    let risk = (props.bet.confidence / props.totalConfidence) * 50
+    let risk
+    if (props.microMode){
+        //MICRO
+        risk = (props.bet.confidence / props.totalConfidence) * 50 // replace 50 with user input of days spending
+    } else{
+        //MACRO
+        risk = props.bet.confidence * 50 // bet.confidence = units  replace 50 with user unit 
+    }
     if (props.bet.direction === "left" && props.bet.game.kind_of_bet !== "total" || props.bet.direction === "right" && props.bet.game.kind_of_bet === "total"){
          line = props.bet.game.over_home_value
     }else{
@@ -75,9 +82,6 @@ function renderRiskWin(props){
     }else{
         win = (risk * 100) / Math.abs(parseInt(line))
     }
-    // console.log("risk: ", risk)
-    // console.log("win: ", win)
-    // console.log("line: ", line)
     return (
         <View style={styles.container}>
             <Text style={styles.text}>{parseFloat(risk).toFixed(2)}</Text>

@@ -2,7 +2,7 @@
 import React from 'react';
 import DrawerIcon from '../components/DrawerIcon';
 import { Header } from 'react-native-elements';
-import { Button, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Categories from '../components/Categories';
 
@@ -12,12 +12,22 @@ import { connect } from 'react-redux'
 class HomeScreen extends React.Component {
     state= {
       sliderValue: 50,
-      sports = []
+      sports: [],
+      microMode: false,
+      //take following from user but for temp purposes
+      unit: 50,
+      maxRisk: 200, 
     }
 
   navigateToGame(sport){
     this.setSport(sport)
     this.navigation.navigate('Game', {sport: "beef"}) // sets redux sport to sport
+  }
+  onSwitch = ()=>{
+    let updated = !this.state.microMode
+    this.setState({
+      microMode: updated
+    })
   }
 
   // chooseMultipleSports = () => { 
@@ -31,14 +41,14 @@ class HomeScreen extends React.Component {
       <Header style={styles.header} 
         barStyle={'light-content'}
         leftComponent={<DrawerIcon/>}
+          centerComponent={<Switch value={this.state.microMode} onValueChange={() => this.onSwitch()} ios_backgroundColor={'black'} trackColor={{ true: 'red', false: 'grey' }}/>}
         rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
         />
       <View style={styles.getStartedContainer}>
-          <Text style={styles.appTitle}>MicroBets™</Text>
+          <Text style={styles.appTitle}>{this.state.microMode ? 'MicroBets' : 'MacroBets'}</Text>
       </View>
       <View style={styles.container}>
-        <Text style={styles.title}>{`Current Unit:`}</Text>
-        <Text style={styles.title}>{`$${Math.floor(this.state.sliderValue)}`}</Text>
+          <Text style={styles.title}>{this.state.microMode ? `Total Risk: $${parseFloat(this.state.maxRisk).toFixed(2)}` : `Current Unit: $${parseFloat(this.state.unit).toFixed(2)}`}</Text>
       </View>
         <ScrollView
             // contentContainerStyle={styles.contentContainer}
