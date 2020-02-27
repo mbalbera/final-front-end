@@ -74,3 +74,6 @@ export function getUserProfile(id) {
 export function setSport(sport){
     return {type: "CHANGE_SPORT", payload: sport}
 }
+export function setMicroMode() {
+    return { type: "CHANGE_MODE" }
+}

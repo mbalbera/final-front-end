@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, FlatList, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 
 

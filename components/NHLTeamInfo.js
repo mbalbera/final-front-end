@@ -58,15 +58,16 @@ const NHL = {
     },
     "MIN": {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/MIN.png'),
-        background_color: 'rgb(175,35,36)'
+        background_color: 'rgb(7,72,49)'
     },
-    "MTL": {
+    "MON": {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/MTL.png'),
         background_color: 'rgb(175,30,45)'
     },
     "NJ" : {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/NJ.png'),
-        background_color: 'rgb(17,17,17)'
+        // background_color: 'rgb(17,17,17)'
+        background_color: 'rgb(204,23,44)'
     },
     "NSH": {
         img_path: require('../assets/images/sport_images/NHL_LOGOS/NSH.png'),

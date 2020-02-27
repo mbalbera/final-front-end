@@ -20,7 +20,6 @@ class BetSlipScreen extends React.Component {
         slip: true,
         bets: [],
         modalVisible: true,
-        microMode: false,
     }
     componentDidMount(){
 
@@ -31,7 +30,7 @@ class BetSlipScreen extends React.Component {
     }
     render() {
         // console.log(this.props)
-        let mapped = this.state.bets.map(bet => <BetRow key={bet.id} bet={bet} slip={this.state.slip} removeHandler={this.removeHandler} microMode={this.state.microMode} />)
+        let mapped = this.state.bets.map(bet => <BetRow key={bet.id} bet={bet} slip={this.state.slip} removeHandler={this.removeHandler} microMode={props.microMode} />)
         return (
             <View style={styles.container}>
                 <Header style={styles.header}

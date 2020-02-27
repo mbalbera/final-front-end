@@ -13,8 +13,9 @@ export default class CardStack extends Component {
 
    componentDidMount(){
        let sport = this.props.sport
+       //command to set up local tunnel 
         fetch(`http://localhost:3000/api/v1/bets/${sport}`) // FOR SIMULATOR
-    //    fetch(`https://spicy-bat-85.localtunnel.me/api/v1/bets/${sport}`)  // FOR LOCAL TUNNEL TO iOS
+    //    fetch(`https://jolly-dodo-94.localtunnel.me/api/v1/bets/${sport}`)  // FOR LOCAL TUNNEL TO iOS
            .then(resp => resp.json())
            .then(data =>
                this.setState({

@@ -140,29 +140,38 @@ export default class Card extends React.Component {
         console.log(this.props.sport)
         switch (this.props.sport) {
             case "nfl":
-                // console.log(NFL[this.props.info.home_team_abr]["img_path"])
-                homeTeamImg = NFL[this.props.info.home_team_abr]["img_path"]
-                awayTeamImg = NFL[this.props.info.away_team_abr]["img_path"]
-                homeTeamBackground = NFL[this.props.info.home_team_abr]["background_color"]
-                awayTeamBackground = NFL[this.props.info.away_team_abr]["background_color"]
+                    homeTeamImg = NFL[this.props.info.home_team_abr]["img_path"]
+                    homeTeamBackground = NFL[this.props.info.home_team_abr]["background_color"]
+                    awayTeamImg = NFL[this.props.info.away_team_abr]["img_path"]
+                    awayTeamBackground = NFL[this.props.info.away_team_abr]["background_color"]
                 break
             case "nhl":
-                homeTeamImg = NHL[this.props.info.home_team_abr]["img_path"]
-                awayTeamImg = NHL[this.props.info.away_team_abr]["img_path"]
-                homeTeamBackground = NHL[this.props.info.home_team_abr]["background_color"]
-                awayTeamBackground = NHL[this.props.info.away_team_abr]["background_color"]
+                    homeTeamImg = NHL[this.props.info.home_team_abr]["img_path"]
+                    homeTeamBackground = NHL[this.props.info.home_team_abr]["background_color"]
+                    awayTeamImg = NHL[this.props.info.away_team_abr]["img_path"]
+                    awayTeamBackground = NHL[this.props.info.away_team_abr]["background_color"]
                 break
             case "nba":
-                homeTeamImg = NBA[this.props.info.home_team_abr]["img_path"]
-                awayTeamImg = NBA[this.props.info.away_team_abr]["img_path"]
-                homeTeamBackground = NBA[this.props.info.home_team_abr]["background_color"]
-                awayTeamBackground = NBA[this.props.info.away_team_abr]["background_color"]
+                    homeTeamImg = NBA[this.props.info.home_team_abr]["img_path"]
+                    homeTeamBackground = NBA[this.props.info.home_team_abr]["background_color"]
+                    awayTeamImg = NBA[this.props.info.away_team_abr]["img_path"]
+                    awayTeamBackground = NBA[this.props.info.away_team_abr]["background_color"]
                 break
             case "ncaaf" || "ncaam":
-                homeTeamImg = NCAA[this.props.info.home_team_abr]["img_path"]
-                awayTeamImg = NCAA[this.props.info.away_team_abr]["img_path"]
-                homeTeamBackground = NCAA[this.props.info.home_team_abr]["background_color"]
-                awayTeamBackground = NCAA[this.props.info.away_team_abr]["background_color"]
+                if (NCAA[this.props.info.home_team_abr]){
+                    homeTeamImg = NCAA[this.props.info.home_team_abr]["img_path"] 
+                    homeTeamBackground = NCAA[this.props.info.home_team_abr]["background_color"]
+                }else{
+                    homeTeamImg = <View><Text>{this.props.info.home_team_name}</Text></View>
+                    homeTeamBackground = 'rgb(17,17,17)'
+                }
+                if (NCAA[this.props.info.away_team_abr]){
+                    awayTeamImg = NCAA[this.props.info.away_team_abr]["img_path"]
+                    awayTeamBackground = NCAA[this.props.info.away_team_abr]["background_color"]
+                }else{
+                    awayTeamImg = <View><Text>{this.props.info.home_team_name}</Text></View>
+                    awayTeamBackground = 'rgb(17,17,17)'
+                }
                 break
 
         }
@@ -180,7 +189,7 @@ export default class Card extends React.Component {
             return (
                 <Text style={{ textAlign: 'center' }}>
                     Who will win this game?
-            </Text>
+                </Text>
             )
         } else if (this.props.info.kind_of_bet === "spread") {
             return (

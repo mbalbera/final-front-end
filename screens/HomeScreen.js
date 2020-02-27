@@ -2,18 +2,17 @@
 import React from 'react';
 import DrawerIcon from '../components/DrawerIcon';
 import { Header } from 'react-native-elements';
-import { Button, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
+import { Button, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, TextInput, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Categories from '../components/Categories';
-
-import { setSport } from '../actions/authActions'
+import { setSport, setMicroMode } from '../actions/allActions'
 import { connect } from 'react-redux'
 
 class HomeScreen extends React.Component {
     state= {
       sliderValue: 50,
       sports: [],
-      microMode: false,
+      // microMode: false,
       //take following from user but for temp purposes
       unit: 50,
       maxRisk: 200, 
@@ -24,15 +23,20 @@ class HomeScreen extends React.Component {
     this.navigation.navigate('Game', {sport: "beef"}) // sets redux sport to sport
   }
   onSwitch = ()=>{
-    let updated = !this.state.microMode
-    this.setState({
-      microMode: updated
-    })
+    this.setMicroMode()
+    // let updated = !this.state.microMode
+    // this.setState({
+    //   microMode: updated
+    // })
   }
 
   // chooseMultipleSports = () => { 
   //   console.log(this.state.sports)
   // }
+
+  setMoney =()=>{
+    //POST to DB to change the users unit or spend total
+  }
 
 
   render(){
@@ -45,10 +49,18 @@ class HomeScreen extends React.Component {
         rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
         />
       <View style={styles.getStartedContainer}>
-          <Text style={styles.appTitle}>{this.state.microMode ? 'MicroBets' : 'MacroBets'}</Text>
+          <Text style={styles.appTitle}>
+            {this.state.microMode ? 'MicroBets' : 'MacroBets'}
+          </Text>
       </View>
       <View style={styles.container}>
-          <Text style={styles.title}>{this.state.microMode ? `Total Risk: $${parseFloat(this.state.maxRisk).toFixed(2)}` : `Current Unit: $${parseFloat(this.state.unit).toFixed(2)}`}</Text>
+          {/* <Text style={styles.title}>{this.state.microMode ? `Total Risk: $${parseFloat(this.state.maxRisk).toFixed(2)}` : `Current Unit: $${parseFloat(this.state.unit).toFixed(2)}`}</Text> */}
+          <Text 
+            style={styles.title}>{this.state.microMode ? `Total Risk:` : `Current Unit:`}
+          </Text>
+          <View style={styles.inputContainer}>
+            <TextInput style={styles.input} keyboardType={'numeric'}>{ this.state.microMode ? `$${parseFloat(this.state.maxRisk).toFixed(2)}` : `$${parseFloat(this.state.unit).toFixed(2)}` }</TextInput>
+          </View>
       </View>
         <ScrollView
             // contentContainerStyle={styles.contentContainer}
@@ -68,13 +80,18 @@ class HomeScreen extends React.Component {
 }
 }
 
+function msp(state) {
+  return {
+    microMode: state.user.microMode
+  }
+}
 HomeScreen.navigationOptions = {
   header: null,
   title: 'Home',
   left: <DrawerIcon/>
 };
 
-export default connect(null, { setSport } )(withNavigation(HomeScreen))
+export default connect(msp, { setSport, setMicroMode } )(withNavigation(HomeScreen))
 
 
 const styles = StyleSheet.create({
@@ -101,6 +118,32 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   
+  input: {
+    display:'flex',
+    color: 'rgb(17,17,17)',
+    fontSize: 22,
+    // color: 'rgb(211,215,225)',
+    lineHeight: 27,
+    textAlign: 'center',
+    justifyContent: 'space-evenly',
+    // paddingHorizontal: '5%',
+    margin:'auto',
+    backgroundColor: 'rgb(191,195,205)', 
+    // backgroundColor: 'rgb(41,139,217)', 
+    // borderWidth: 2,
+    // borderColor: 'rgb(41,139,217)'
+
+  },
+  inputContainer: {
+    alignItems: 'center',
+    // display:'flex',
+    // width: '40%',
+  },
+  spaceFiller:{
+    width: '30%',
+    backgroundColor: 'rgb(53,60,79)',
+  },
+
   tabBarInfoText: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',

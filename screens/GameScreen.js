@@ -2,31 +2,48 @@ import React from 'react'
 import DrawerIcon from '../components/DrawerIcon';
 import { Slider, Header } from 'react-native-elements';
 import { withNavigation} from 'react-navigation';
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import CardStack from '../components/CardStack';
 import BetSlipModal from '../components/BetSlipModal'
-
 import { connect } from 'react-redux'
 
 class GameScreen extends React.Component{
     
     state ={
-        sliderValue: 5,
+        sliderShownValue: 1,
         picks: [],
         modalVisible: false,
+        microMode: false,
     }
-    
-    changeSlider(value){
-        const sliderValue = Math.floor(value)
+
+    componentDidMount() {
+        this.prepState();
+    }
+
+    prepState(){
+        let sv = 1
+        let av = 10
+        if (this.state.microMode) {
+            sv = 5
+            av = 50
+        }
         this.setState({
-            sliderValue
+            sliderShownValue: sv,
+            sliderActualValue: av
+        })
+    }
+
+    changeSliderValue(value){
+        this.setState({
+            sliderShownValue: value,
+           
         }) 
     }
     addPick = (direction, gameObj) =>{
-        let updated = [...this.state.picks, {game: gameObj, direction: direction, confidence: this.state.sliderValue}]
+        let updated = [...this.state.picks, {game: gameObj, direction: direction, confidence: this.state.sliderShownValue}]
         this.setState({
             picks: updated,
-            sliderValue: 5
+            sliderShownValue: 1,
         })
     }
 
@@ -36,49 +53,71 @@ class GameScreen extends React.Component{
             modalVisible: swtch
         })
     }
+
     removeHandler = (betId) => {
         let updated = this.state.picks.filter(bet => bet["game"]["id"] !== betId)
         this.setState({
             picks: updated
         })
     }
-
+    
     render(){
         return(
             <View style={styles.container}>
                 <Header style={styles.header}
                     barStyle={'light-content'}
                     leftComponent={<DrawerIcon />}
+                    centerComponent={this.state.microMode? "Micro" : "Macro"}
                     rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
                 />
                 {this.state.modalVisible ? <BetSlipModal picks={this.state.picks} hideModal={this.showModal} visible={this.state.modalVisible} removeHandler={this.removeHandler}/> : null}
                 <View style={styles.mainContainer}>
                 
-                    <View style={styles.midContainer}>
+                    <View style={styles.topContainer}>
                         <View style={styles.container}>
-                            <Text style={styles.title}>Confidence Meter: </Text>
+                            <Text style={styles.title}>{this.state.microMode?'Confidence Meter:' : 'Units:' }</Text>
                             <Slider
                                 style={styles.slider}
                                 thumbTintColor='white'
                                 minimumValue={1}
+                                value={this.state.sliderShownValue}
                                 maximumValue={10}
+                                step={this.state.microMode ? 1 : 0.5 }
                                 minimumTrackTintColor="white"
                                 maximumTrackTintColor="black"
-                                value={this.state.sliderValue}
-                                onValueChange={(value)=>this.changeSlider(value)}
-                                />
-                            <Text style={styles.title}>{this.state.sliderValue}/10</Text>
+                                value={this.state.sliderShownValue}
+                                onValueChange={(value) => this.changeSliderValue(value)}
+                            />
+                            <Text style={styles.title}>{this.state.sliderShownValue}</Text>
                         </View>
                     </View>
                     <View style={styles.gameContainer}>
                         <CardStack addPick={this.addPick} sport={this.props.sport}/>
                     </View>
-                    <View style={styles.container}>
-                        {/* <View style={styles.buttonsContainer}>
-                        <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
-                        </View> */}
-                        <TouchableOpacity onPress={() => this.showModal()} style={styles.betslip_button}><Text style={styles.betSlipText}>Bet Slip</Text></TouchableOpacity>
+                    <View style={styles.bottomContainer}>
+                    {/* <View style={styles.buttonsContainerTop}>
+                        <TouchableOpacity style={styles.bottomButton}>
+                            <Text style={styles.betSlipText}>Swipe Left </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.bottomButton}>
+                            <Text style={styles.betSlipText}>Swipe Right</Text>
+                        </TouchableOpacity>
+                    </View> */}
+                    
+                        <View style={styles.buttonsContainerBottom}>
+                            <TouchableOpacity style={styles.bottomButton}>
+                                <Text style={styles.betSlipText}>Prior Bet</Text>
+                            </TouchableOpacity>
+                            <Text> </Text>
+                            <TouchableOpacity style={styles.bottomButton}>
+                                <Text style={styles.betSlipText}>Next Bet</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.container}>
+                            <TouchableOpacity microMode={this.state.microMode} onPress={() => this.showModal()} style={styles.betslipButton}>
+                                <Text style={styles.betSlipText}>Bet Slip</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -94,7 +133,8 @@ GameScreen.navigationOptions = {
 
 function msp(state){
     return {
-        sport: state.user.sport
+        sport: state.user.sport,
+        microMode: state.user.microMode
     }
 }
 
@@ -106,6 +146,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'rgb(53, 60, 80)',
+    },
+
+    bottomContainer: {
+        top: '30%'
     },
 
     betSlipText:{
@@ -132,14 +176,16 @@ const styles = StyleSheet.create({
         alignContent: 'center'
      
     },
-    midContainer: {
-        marginTop: 15,
-        paddingTop: 25,
-        paddingBottom: 25,
+    topContainer: {
+        top: '10%',
+        // marginTop: 15,
+        // paddingTop: 25,
+        // paddingBottom: 25,
         alignItems: 'center',
     },
 
     gameContainer: {
+        top: '25%',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -159,17 +205,39 @@ const styles = StyleSheet.create({
         color: 'rgba(96,100,109, 1)',
         textAlign: 'center',
     },
-   
-    betslip_button: {
+
+    buttonsContainerTop: {
+        // paddingTop: 10,
+        top: '110%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+    },
+    buttonsContainerBottom: {
+        // paddingTop: 10,
+        top: '115%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    betslipButton: {
         backgroundColor: 'rgb(41,139,217)',
         width: '60%',
         height: 40,
         borderRadius: 10,
         justifyContent: "center",
         textAlign: 'center',
-        top: '1200%',
+        top: '1100%',
         left: '20%',
         zIndex:100        
+    },
+
+    bottomButton:{
+        color: 'rgb(255,255,255)',
+        backgroundColor: 'rgb(41,139,217)',
+        width: '40%',
+        height: 40,
+        borderRadius: 10,
+        textAlign: 'center',   
+        justifyContent: "center",
     },
     logo: {
         height: 80,
