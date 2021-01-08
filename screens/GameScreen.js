@@ -13,7 +13,7 @@ class GameScreen extends React.Component{
         sliderShownValue: 1,
         picks: [],
         modalVisible: false,
-        microMode: false,
+        microMode: true,
     }
 
     componentDidMount() {
@@ -43,7 +43,7 @@ class GameScreen extends React.Component{
         let updated = [...this.state.picks, {game: gameObj, direction: direction, confidence: this.state.sliderShownValue}]
         this.setState({
             picks: updated,
-            sliderShownValue: 1,
+            sliderShownValue: 5,
         })
     }
 
@@ -70,7 +70,7 @@ class GameScreen extends React.Component{
                     centerComponent={this.state.microMode? "Micro" : "Macro"}
                     rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
                 />
-                {this.state.modalVisible ? <BetSlipModal picks={this.state.picks} hideModal={this.showModal} visible={this.state.modalVisible} removeHandler={this.removeHandler}/> : null}
+                {this.state.modalVisible ? <BetSlipModal microMode={this.props.microMode} picks={this.state.picks} hideModal={this.showModal} visible={this.state.modalVisible} removeHandler={this.removeHandler}/> : null}
                 <View style={styles.mainContainer}>
                 
                     <View style={styles.topContainer}>

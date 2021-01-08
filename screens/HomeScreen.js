@@ -12,7 +12,7 @@ class HomeScreen extends React.Component {
     state= {
       sliderValue: 50,
       sports: [],
-      // microMode: false,
+      microMode: true,
       //take following from user but for temp purposes
       unit: 50,
       maxRisk: 200, 
@@ -65,11 +65,11 @@ class HomeScreen extends React.Component {
         <ScrollView
             // contentContainerStyle={styles.contentContainer}
             >
-            <Text style={styles.title}>Categories</Text>
+            <Text style={styles.title}>Leagues</Text>
             <Categories {...this.props} navigateToGame={this.navigateToGame}/>
           <View style={styles.buttonsContainer}>     
-              <Button onPress={()=>this.props.navigation.navigate('UserName')} title="Manage My Account"/>
-              <Button onPress={() => this.props.navigation.navigate('BetTracker')}title="Track Your Bets"/>
+              <Button color={'rgb(255,255,255)'} onPress={()=>this.props.navigation.navigate('UserName')} title="Manage My Account"/>
+              <Button color={'rgb(255,255,255)'} onPress={() => this.props.navigation.navigate('BetTracker')}title="Track Your Bets"/>
           </View>
           {/* <View style={styles.buttonsContainer}>
             <Button onPress={() => this.chooseMultipleSports()} title="Start" />
@@ -104,16 +104,15 @@ const styles = StyleSheet.create({
   
   getStartedContainer: {
     marginTop: 15,
-    paddingTop: 25,
+    // paddingTop: 25,
     paddingBottom: 25,
     alignItems: 'center',
     marginHorizontal: 50,
   },
-  
 
   title: {
     fontSize: 27,
-    color: 'rgb(211,215,225)',
+    color: 'rgb(255,255,255)',
     lineHeight: 27,
     textAlign: 'center',
   },
@@ -122,7 +121,7 @@ const styles = StyleSheet.create({
     display:'flex',
     color: 'rgb(17,17,17)',
     fontSize: 22,
-    // color: 'rgb(211,215,225)',
+    // color: 'rgb(255,255,255)',
     lineHeight: 27,
     textAlign: 'center',
     justifyContent: 'space-evenly',
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
   },
   appTitle:{
     fontSize: 36,
-    color: 'rgb(211,215,225)'
+    color: 'rgb(255,255,255)'
   }
 });
 

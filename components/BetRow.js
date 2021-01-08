@@ -61,13 +61,13 @@ function backgrounder(id){
 }
 
 function renderRiskWin(props){
-    
+    console.log("renderriskwinprops", props)
     let line
     let win
     let risk
-    if (props.microMode){
+    if (!props.microMode){
         //MICRO
-        risk = (props.bet.confidence / props.totalConfidence) * 50 // replace 50 with user input of days spending
+        risk = (props.bet.confidence / props.totalConfidence) * 200 // replace 50 with user input of days spending
     } else{
         //MACRO
         risk = props.bet.confidence * 50 // bet.confidence = units  replace 50 with user unit 
@@ -93,7 +93,7 @@ function renderRiskWin(props){
 
 
 function BetRow(props){
-    // console.log('betrow props: ', props.index)
+    // console.log('betrow props: ', props.microMode)
         return (
             <View style={{...styles.container,backgroundColor:backgrounder(props.index) }}>
                 {renderPick(props)}

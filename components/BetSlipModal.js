@@ -48,7 +48,7 @@ class BetSlipModal extends React.Component {
         }
     }
     render() {
-        let mapped = this.props.picks.map((bet, index) => <BetRow key={bet.id} bet={bet} totalConfidence={this.state.totalConfidence} index={index} slip={this.state.slip} removeHandler={this.props.removeHandler} />)
+        let mapped = this.props.picks.map((bet, index) => <BetRow key={bet.id} bet={bet} totalConfidence={this.state.totalConfidence} index={index} slip={this.state.slip} removeHandler={this.props.removeHandler} microMode={this.props.microMode} />)
         return (
             <Modal
                 animationType="slide"

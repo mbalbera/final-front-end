@@ -5,7 +5,6 @@ import NFL from './NFLTeamInfo'
 import NHL from './NHLTeamInfo'
 import NBA from './NBATeamInfo'
 import NCAA from './NCAATeamInfo'
-import { onSessionWasInterrupted } from 'expo/build/AR';
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 
@@ -20,8 +19,10 @@ export default class Card extends React.Component {
             currentIndex: 0,
             homeTeamImg: "",
             awayTeamImg: "",
-            homeTeamBackground: "black",
-            awayTeamBackground: "black"
+            homeTeamBackground: "rgb(17,17,17)",
+            awayTeamBackground: "rgb(17,17,17)",
+            // homeTeamSecondColor: "rgb(255,255,255)",
+            // awayTeamSecondColor: "rgb(255,255,255)",
         }
 
         this.rotate = this.position.x.interpolate({
@@ -137,6 +138,8 @@ export default class Card extends React.Component {
         let awayTeamImg
         let homeTeamBackground
         let awayTeamBackground
+        // let homeTeamSecondColor
+        // let awayTeamSecondColor
         console.log(this.props.sport)
         switch (this.props.sport) {
             case "nfl":
@@ -144,33 +147,39 @@ export default class Card extends React.Component {
                     homeTeamBackground = NFL[this.props.info.home_team_abr]["background_color"]
                     awayTeamImg = NFL[this.props.info.away_team_abr]["img_path"]
                     awayTeamBackground = NFL[this.props.info.away_team_abr]["background_color"]
+                    // homeTeamSecondColor = NFL[this.props.info.home_team_abr]["secondary_color"]
+                    // awayTeamSecondColor = NFL[this.props.info.away_team_abr]["secondary_color"]
                 break
             case "nhl":
                     homeTeamImg = NHL[this.props.info.home_team_abr]["img_path"]
                     homeTeamBackground = NHL[this.props.info.home_team_abr]["background_color"]
                     awayTeamImg = NHL[this.props.info.away_team_abr]["img_path"]
                     awayTeamBackground = NHL[this.props.info.away_team_abr]["background_color"]
+                    // homeTeamSecondColor = NHL[this.props.info.home_team_abr]["secondary_color"]
+                    // awayTeamSecondColor = NHL[this.props.info.away_team_abr]["secondary_color"]
                 break
             case "nba":
                     homeTeamImg = NBA[this.props.info.home_team_abr]["img_path"]
                     homeTeamBackground = NBA[this.props.info.home_team_abr]["background_color"]
                     awayTeamImg = NBA[this.props.info.away_team_abr]["img_path"]
                     awayTeamBackground = NBA[this.props.info.away_team_abr]["background_color"]
+                    // homeTeamSecondColor = NBA[this.props.info.home_team_abr]["secondary_color"]
+                    // awayTeamSecondColor = NBA[this.props.info.away_team_abr]["secondary_color"]
                 break
             case "ncaaf" || "ncaam":
                 if (NCAA[this.props.info.home_team_abr]){
                     homeTeamImg = NCAA[this.props.info.home_team_abr]["img_path"] 
                     homeTeamBackground = NCAA[this.props.info.home_team_abr]["background_color"]
+                    // homeTeamSecondColor = NCAA[this.props.info.home_team_abr]["secondary_color"]
                 }else{
                     homeTeamImg = <View><Text>{this.props.info.home_team_name}</Text></View>
-                    homeTeamBackground = 'rgb(17,17,17)'
                 }
                 if (NCAA[this.props.info.away_team_abr]){
                     awayTeamImg = NCAA[this.props.info.away_team_abr]["img_path"]
                     awayTeamBackground = NCAA[this.props.info.away_team_abr]["background_color"]
+                    // awayTeamSecondColor = NCAA[this.props.info.home_team_abr]["secondary_color"]
                 }else{
                     awayTeamImg = <View><Text>{this.props.info.home_team_name}</Text></View>
-                    awayTeamBackground = 'rgb(17,17,17)'
                 }
                 break
 
@@ -179,7 +188,9 @@ export default class Card extends React.Component {
             homeTeamImg: homeTeamImg,
             awayTeamImg: awayTeamImg,
             homeTeamBackground: homeTeamBackground,
-            awayTeamBackground: awayTeamBackground
+            awayTeamBackground: awayTeamBackground,
+            // homeTeamSecondColor: homeTeamSecondColor,
+            // awayTeamSecondColor: awayTeamSecondColor
         })
 
     }
@@ -272,9 +283,39 @@ export default class Card extends React.Component {
             )
         }
     }
+    displayBoldTextLeft() {
+        if (this.props.info.kind_of_bet === "spread") {
+            return (
+                <View style={{ marginHorizontal: '5%', flexDirection: 'row', justifyContent:'flex-start'}}>
+                    <Text style={{ textAlign: 'left', color:'rgb(255,255,255)', fontWeight:'bold', fontSize: 20 }}> {`${this.addPlus(this.props.info.away_team_spread)}`}</Text>
+                </View>
+            )
+        } else if (this.props.info.kind_of_bet === "total"){
+            return (
+                <View style={{ marginHorizontal: '5%', flexDirection: 'row', justifyContent:'flex-start'}}>
+                    <Text style={{ textAlign: 'left', color:'rgb(255,255,255)',fontWeight:'bold', fontSize: 20}}> {`Under ${this.props.info.away_team_spread}`}</Text>
+                </View>
+            )
+        }
+    }
+
+    displayBoldTextRight() {
+        if (this.props.info.kind_of_bet === "spread") {
+            return (
+                <View style={{ marginHorizontal: '5%', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                    <Text style={{ textAlign: 'right', color:'rgb(255,255,255)', fontWeight:'bold', fontSize: 20}}> {`${this.addPlus(this.props.info.home_team_spread)}`}</Text>
+                </View>
+            )
+        } else if (this.props.info.kind_of_bet === "total") {
+            return (
+                <View style={{ marginHorizontal: '5%', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                    <Text style={{ textAlign: 'right', color:'rgb(255,255,255)', fontWeight:'bold', fontSize: 20}}> {`Over ${this.props.info.home_team_spread}`}</Text>
+                </View>
+            )
+        }
+    }
 
     render() {
-        // console.log(this.props.info.time)
 
         return (
             <Animated.View
@@ -293,9 +334,11 @@ export default class Card extends React.Component {
                 <View style={Styles.card}>
                     <View style={Styles.cardImage}>
                         <View style={{ width: '50%', backgroundColor: this.state.homeTeamBackground }}>
+                        {this.displayBoldTextLeft()}    
                             <Image source={this.state.homeTeamImg} style={Styles.teamLogo} />
                         </View>
                         <View style={{ width: '50%', backgroundColor: this.state.awayTeamBackground }}>
+                        {this.displayBoldTextRight()}    
                             <Image source={this.state.awayTeamImg} style={Styles.teamLogo} />
                         </View>
                     </View>

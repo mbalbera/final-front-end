@@ -19,7 +19,7 @@ class AddFundsScreen extends React.Component {
                 rightComponent={<Text style={styles.funds}>Funds: ${this.state.funds}</Text>}
             />
                 <View style={styles.midContainer}>
-                    <Text style={{ color: 'rgb(10, 106, 250)', paddingBottom: 20 }}>Username has ${this.state.funds}</Text>
+                    <Text style={{ color: 'rgb(10, 106, 250)', paddingBottom: 20 }}>{`Username has ${this.state.funds}`}</Text>
                     
                     <View style={styles.formContainer}>
                         <TextInput keyboardType={'numeric'} placeholder="Add Funds" onChangeText={fundsForm => this.setState({ fundsForm })} style={styles.input} autoCapitalize="none" />
