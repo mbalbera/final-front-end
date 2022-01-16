@@ -1,97 +1,93 @@
 // import * as WebBrowser from 'expo-web-browser';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import DrawerIcon from '../components/DrawerIcon';
 import { Header } from 'react-native-elements';
 import { Button, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, TextInput, View } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Categories from '../components/Categories';
-import { setSport, setMicroMode } from '../actions/allActions'
-import { connect } from 'react-redux'
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { microModeState } from '../recoil/generalAtom'
 
-class HomeScreen extends React.Component {
-    state= {
-      sliderValue: 50,
-      sports: [],
-      microMode: true,
-      //take following from user but for temp purposes
-      unit: 50,
-      maxRisk: 200, 
-    }
 
-  navigateToGame(sport){
-    this.setSport(sport)
-    this.navigation.navigate('Game', {sport: "beef"}) // sets redux sport to sport
-  }
-  onSwitch = ()=>{
-    this.setMicroMode()
-    // let updated = !this.state.microMode
-    // this.setState({
-    //   microMode: updated
-    // })
+function HomeScreen(props){  
+  
+  const [microMode, setMicroMode] = useRecoilState(microModeState);
+
+  const [stepOne, setStepOne] = useState(false);
+  const [sliderValue, setSliderValue] = useState(50)
+  const [sports, setSports] = useState('')
+  const [unit, setUnit] = useState(50)
+  const [maxRisk, setMaxRisk] = useState(200)
+
+  function navigateToGame(sport){
+    // setSport(sport)
+    this.navigation.navigate('Game', {sport}) 
   }
 
-  // chooseMultipleSports = () => { 
-  //   console.log(this.state.sports)
-  // }
-
-  setMoney =()=>{
+  const setMoney = ()=>{
     //POST to DB to change the users unit or spend total
   }
 
-
-  render(){
-    return (
-      <View style={styles.container}>
-      <Header style={styles.header} 
-        barStyle={'light-content'}
-        leftComponent={<DrawerIcon/>}
-          centerComponent={<Switch value={this.state.microMode} onValueChange={() => this.onSwitch()} ios_backgroundColor={'black'} trackColor={{ true: 'red', false: 'grey' }}/>}
-        rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
-        />
-      <View style={styles.getStartedContainer}>
-          <Text style={styles.appTitle}>
-            {this.state.microMode ? 'MicroBets' : 'MacroBets'}
-          </Text>
-      </View>
-      <View style={styles.container}>
-          {/* <Text style={styles.title}>{this.state.microMode ? `Total Risk: $${parseFloat(this.state.maxRisk).toFixed(2)}` : `Current Unit: $${parseFloat(this.state.unit).toFixed(2)}`}</Text> */}
-          <Text 
-            style={styles.title}>{this.state.microMode ? `Total Risk:` : `Current Unit:`}
-          </Text>
-          <View style={styles.inputContainer}>
-            <TextInput style={styles.input} keyboardType={'numeric'}>{ this.state.microMode ? `$${parseFloat(this.state.maxRisk).toFixed(2)}` : `$${parseFloat(this.state.unit).toFixed(2)}` }</TextInput>
-          </View>
-      </View>
-        <ScrollView
-            // contentContainerStyle={styles.contentContainer}
-            >
-            <Text style={styles.title}>Leagues</Text>
-            <Categories {...this.props} navigateToGame={this.navigateToGame}/>
-          <View style={styles.buttonsContainer}>     
-              <Button color={'rgb(255,255,255)'} onPress={()=>this.props.navigation.navigate('UserName')} title="Manage My Account"/>
-              <Button color={'rgb(255,255,255)'} onPress={() => this.props.navigation.navigate('BetTracker')}title="Track Your Bets"/>
-          </View>
-          {/* <View style={styles.buttonsContainer}>
-            <Button onPress={() => this.chooseMultipleSports()} title="Start" />
-          </View> */}
-      </ScrollView>
-    </View>
-  );
-}
-}
-
-function msp(state) {
-  return {
-    microMode: state.user.microMode
+  const chooseMode = (mode)=>{
+    setStepOne(true)
+    setMicroMode(mode)
   }
+
+  const goBackToMode =()=>{
+    setStepOne(false)
+  }
+
+  const colors = {
+    micro: 'rgb(53,60,79)',
+    macro: 'rgb(50,50,50)',
+  } 
+
+      return (
+        <View style={styles.container}>
+        <Header backgroundColor={microMode ? colors.micro : colors.macro} style={styles.header} 
+          barStyle={'light-content'}
+          leftComponent={<DrawerIcon/>}
+            // centerComponent={<Switch value={microMode} onValueChange={() => setMicroMode(!microMode)} ios_backgroundColor={colors.micro} trackColor={{ true: colors.macro, false: colors.micro }}/>}
+          rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
+          />
+        <View style={styles.getStartedContainer}>
+            <Text style={styles.appTitle}>
+              {microMode ? 'MicroBets' : 'MacroBets'}
+            </Text>
+        </View>
+        <View style={styles.container}>
+            {/* <Text style={styles.title}>{microMode ? `Total Risk: $${parseFloat(maxRisk).toFixed(2)}` : `Current Unit: $${parseFloat(unit).toFixed(2)}`}</Text> */}
+            <Text 
+              style={styles.title}>{microMode ? `Total Risk:` : `Current Unit:`}
+            </Text>
+            <View style={styles.inputContainer}>
+              <TextInput style={styles.input} keyboardType={'numeric'}>{ microMode ? `$${parseFloat(maxRisk).toFixed(2)}` : `$${parseFloat(unit).toFixed(2)}` }</TextInput>
+            </View>
+        </View>
+          <ScrollView
+              // contentContainerStyle={styles.contentContainer}
+              >
+              {/* <Text style={styles.title}>Leagues</Text> */}
+              <Categories {...props} navigateToGame={navigateToGame}/>
+            <View style={styles.buttonsContainer}>     
+                <Button color={'rgb(255,255,255)'} onPress={()=>props.navigation.navigate('UserName')} title="Manage My Account"/>
+                <Button color={'rgb(255,255,255)'} onPress={() => props.navigation.navigate('BetTracker')}title="Track Your Bets"/>
+            </View>
+            {/* <View style={styles.buttonsContainer}>
+              <Button onPress={() => this.chooseMultipleSports()} title="Start" />
+            </View> */}
+        </ScrollView>
+      </View>
+    );
 }
+
 HomeScreen.navigationOptions = {
   header: null,
   title: 'Home',
   left: <DrawerIcon/>
 };
 
-export default connect(msp, { setSport, setMicroMode } )(withNavigation(HomeScreen))
+export default withNavigation(HomeScreen)
 
 
 const styles = StyleSheet.create({
@@ -110,6 +106,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,
   },
 
+  majorBox: {
+    marginTop: 15,
+    display:'flex',
+    // paddingTop: 25,
+    paddingBottom: 25,
+    alignItems: 'center',
+    justifyContent:'center',
+    marginHorizontal: 50,
+    borderWidth: 5,
+    borderRadius:9,
+    height: '30%'
+  },
+
+  majorText:{
+    marginTop: 20,
+    fontSize: 30,
+    color: 'rgb(255,255,255)',
+    margin:0,
+  },
+
   title: {
     fontSize: 27,
     color: 'rgb(255,255,255)',
@@ -119,7 +135,8 @@ const styles = StyleSheet.create({
   
   input: {
     display:'flex',
-    color: 'rgb(17,17,17)',
+    color: 'rgb(191,195,205)',
+    fontWeight:'bold',
     fontSize: 22,
     // color: 'rgb(255,255,255)',
     lineHeight: 27,
@@ -127,13 +144,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     // paddingHorizontal: '5%',
     margin:'auto',
-    backgroundColor: 'rgb(191,195,205)', 
+    borderWidth:2,
+    borderBottomColor: 'rgb(191,195,205)', 
+    borderTopColor: 'rgba(191,195,205,0.0)', 
+    borderLeftColor: 'rgba(191,195,205,0.0)', 
+    borderRightColor: 'rgba(191,195,205,0.0)', 
     // backgroundColor: 'rgb(41,139,217)', 
     // borderWidth: 2,
     // borderColor: 'rgb(41,139,217)'
 
   },
   inputContainer: {
+    marginTop:25,
     alignItems: 'center',
     // display:'flex',
     // width: '40%',
@@ -167,7 +189,7 @@ const styles = StyleSheet.create({
     color: 'white'
   },
   header:{
-    backgroundColor: 'rgb(10,106,250)'
+    color: 'rgb(17,17,17)'
   },
   slider: {
     width: 200,
