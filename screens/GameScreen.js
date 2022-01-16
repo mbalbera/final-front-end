@@ -5,7 +5,6 @@ import { withNavigation} from 'react-navigation';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import CardStack from '../components/CardStack';
 import BetSlipModal from '../components/BetSlipModal'
-import { connect } from 'react-redux'
 
 class GameScreen extends React.Component{
     
@@ -138,7 +137,7 @@ function msp(state){
     }
 }
 
-export default connect(msp)(withNavigation(GameScreen))
+export default withNavigation(GameScreen)
 
 const styles = StyleSheet.create({
 
