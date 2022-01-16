@@ -1,19 +1,16 @@
 import React from "react";
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import { rootReducer } from './reducers/index'
-import { Provider } from "react-redux";
 import AppNavigator from './navigation/AppNavigator';
+import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+console.disableYellowBox = true
 
-const storeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(rootReducer, storeEnhancers(applyMiddleware(thunk)));
-function App() {
-  return(
+class App extends React.Component {
 
-    <Provider store={store}>
-        <AppNavigator />
-    </Provider>
-    )
+  render(){
+    return(
+        <RecoilRoot>
+          <AppNavigator/>
+        </RecoilRoot>
+    )}
 }
 
 export default App

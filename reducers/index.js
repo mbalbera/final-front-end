@@ -28,4 +28,5 @@ export function fetchReducer(state = INIT_STATE, action) {
 export const rootReducer = combineReducers({
     fetch: fetchReducer,
     auth: authReducer,
+    user: UserReducer
 });

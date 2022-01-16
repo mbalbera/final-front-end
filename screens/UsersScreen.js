@@ -15,7 +15,8 @@ import {
   View,
 } from 'react-native';
 
-function UsersScreen() {
+function UsersScreen(props) {
+  // console.log(props)
   return (
     <View style={styles.container}>
       <Header style={styles.header}
@@ -28,7 +29,7 @@ function UsersScreen() {
         <Text style={styles.title}>Funds: $100 </Text>
          <View style={styles.buttonsContainer}>
 
-          <Button style={styles.button} title="Add Funds"/>
+          <Button style={styles.button} title="Add Funds" onPress={() => props.navigation.navigate('AddFunds')}/>
           <Button style={styles.button} title="Withdraw Funds"/>
          </View>
         <Button style={styles.button} title="My Stats"/>

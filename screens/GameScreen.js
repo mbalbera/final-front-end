@@ -1,46 +1,127 @@
 import React from 'react'
-import GameCard from '../components/GameCard'
 import DrawerIcon from '../components/DrawerIcon';
 import { Slider, Header } from 'react-native-elements';
-import { withNavigation, DrawerActions } from 'react-navigation';
-import { StyleSheet, Text, View, Dimensions, Image, Animated, PanResponder, ScrollView,Button, TouchableOpacity } from 'react-native';
+import { withNavigation} from 'react-navigation';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import CardStack from '../components/CardStack';
+import BetSlipModal from '../components/BetSlipModal'
 
-function GameScreen(props){
-    return(
-        <View style={styles.container}>
-            <Header style={styles.header}
-                barStyle={'light-content'}
-                leftComponent={<DrawerIcon/>}
-                rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
-            />
-            <View style={styles.mainContainer}>
-                <View style={styles.gameContainer}>
-                    <GameCard style={styles.pic}/>
-                </View>
-                <View style={styles.midContainer}>
-                    <View style={styles.container}>
-                        <Text style={styles.title}>Confidence Meter</Text>
-                        <Slider
-                            style={styles.slider}
-                            thumbTintColor='white'
-                            minimumValue={0}
-                            maximumValue={5}
-                            minimumTrackTintColor="white"
-                            maximumTrackTintColor="black"
-                            value={2.5}
+class GameScreen extends React.Component{
+    
+    state ={
+        sliderShownValue: 1,
+        picks: [],
+        modalVisible: false,
+        microMode: true,
+    }
+
+    componentDidMount() {
+        this.prepState();
+    }
+
+    prepState(){
+        let sv = 1
+        let av = 10
+        if (this.state.microMode) {
+            sv = 5
+            av = 50
+        }
+        this.setState({
+            sliderShownValue: sv,
+            sliderActualValue: av
+        })
+    }
+
+    changeSliderValue(value){
+        this.setState({
+            sliderShownValue: value,
+           
+        }) 
+    }
+    addPick = (direction, gameObj) =>{
+        let updated = [...this.state.picks, {game: gameObj, direction: direction, confidence: this.state.sliderShownValue}]
+        this.setState({
+            picks: updated,
+            sliderShownValue: 5,
+        })
+    }
+
+    showModal = () =>{
+        const swtch = !this.state.modalVisible
+        this.setState({
+            modalVisible: swtch
+        })
+    }
+
+    removeHandler = (betId) => {
+        let updated = this.state.picks.filter(bet => bet["game"]["id"] !== betId)
+        this.setState({
+            picks: updated
+        })
+    }
+    
+    render(){
+        return(
+            <View style={styles.container}>
+                <Header style={styles.header}
+                    barStyle={'light-content'}
+                    leftComponent={<DrawerIcon />}
+                    centerComponent={this.state.microMode? "Micro" : "Macro"}
+                    rightComponent={<Text style={styles.funds}>Funds: $100</Text>}
+                />
+                {this.state.modalVisible ? <BetSlipModal microMode={this.props.microMode} picks={this.state.picks} hideModal={this.showModal} visible={this.state.modalVisible} removeHandler={this.removeHandler}/> : null}
+                <View style={styles.mainContainer}>
+                
+                    <View style={styles.topContainer}>
+                        <View style={styles.container}>
+                            <Text style={styles.title}>{this.state.microMode?'Confidence Meter:' : 'Units:' }</Text>
+                            <Slider
+                                style={styles.slider}
+                                thumbTintColor='white'
+                                minimumValue={1}
+                                value={this.state.sliderShownValue}
+                                maximumValue={10}
+                                step={this.state.microMode ? 1 : 0.5 }
+                                minimumTrackTintColor="white"
+                                maximumTrackTintColor="black"
+                                value={this.state.sliderShownValue}
+                                onValueChange={(value) => this.changeSliderValue(value)}
                             />
+                            <Text style={styles.title}>{this.state.sliderShownValue}</Text>
+                        </View>
                     </View>
-                </View>
-                <View style={styles.container}>
-                    <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.button_left}><Text>Left</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.button_right}><Text>Right</Text></TouchableOpacity>
+                    <View style={styles.gameContainer}>
+                        <CardStack addPick={this.addPick} sport={this.props.sport}/>
                     </View>
-                    <TouchableOpacity onPress={()=>console.log(props.navigation.navigate('BetSlip'))} style={styles.betslip_button}><Text>Bet Slip</Text></TouchableOpacity>
+                    <View style={styles.bottomContainer}>
+                    {/* <View style={styles.buttonsContainerTop}>
+                        <TouchableOpacity style={styles.bottomButton}>
+                            <Text style={styles.betSlipText}>Swipe Left </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.bottomButton}>
+                            <Text style={styles.betSlipText}>Swipe Right</Text>
+                        </TouchableOpacity>
+                    </View> */}
+                    
+                        <View style={styles.buttonsContainerBottom}>
+                            <TouchableOpacity style={styles.bottomButton}>
+                                <Text style={styles.betSlipText}>Prior Bet</Text>
+                            </TouchableOpacity>
+                            <Text> </Text>
+                            <TouchableOpacity style={styles.bottomButton}>
+                                <Text style={styles.betSlipText}>Next Bet</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.container}>
+                            <TouchableOpacity microMode={this.state.microMode} onPress={() => this.showModal()} style={styles.betslipButton}>
+                                <Text style={styles.betSlipText}>Bet Slip</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
             </View>
-        </View>
-    );
+        );
+    }
 }
 
 GameScreen.navigationOptions = {
@@ -49,12 +130,31 @@ GameScreen.navigationOptions = {
     left: <DrawerIcon />
 };
 
+function msp(state){
+    return {
+        sport: state.user.sport,
+        microMode: state.user.microMode
+    }
+}
+
 export default withNavigation(GameScreen)
 
 const styles = StyleSheet.create({
+
+
     container: {
         flex: 1,
         backgroundColor: 'rgb(53, 60, 80)',
+    },
+
+    bottomContainer: {
+        top: '30%'
+    },
+
+    betSlipText:{
+        textAlign: 'center', 
+        fontSize: 18, 
+        color: 'white'
     },
 
     mainContainer:{
@@ -75,19 +175,20 @@ const styles = StyleSheet.create({
         alignContent: 'center'
      
     },
-    midContainer: {
-        marginTop: 15,
-        paddingTop: 25,
-        paddingBottom: 25,
+    topContainer: {
+        top: '10%',
+        // marginTop: 15,
+        // paddingTop: 25,
+        // paddingBottom: 25,
         alignItems: 'center',
     },
 
     gameContainer: {
-        marginTop: 15,
-        paddingTop: 25,
-        paddingBottom: 25,
-        right: 290,
-        position: 'absolute'
+        top: '25%',
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 88
     },
 
 
@@ -103,38 +204,39 @@ const styles = StyleSheet.create({
         color: 'rgba(96,100,109, 1)',
         textAlign: 'center',
     },
-    buttonsContainer: {
-        paddingTop: 10,
+
+    buttonsContainerTop: {
+        // paddingTop: 10,
+        top: '110%',
         flexDirection: 'row',
-        justifyContent: "space-evenly",
-        position: 'absolute',
-        top: 500
+        justifyContent: 'space-around',
     },
-    button_left: {
-        backgroundColor: 'green',
-        width: '40%',
-        height: 40,
-        borderRadius: 10,
-        justifyContent: "center",
-        textAlign: 'center'
+    buttonsContainerBottom: {
+        // paddingTop: 10,
+        top: '115%',
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
-    button_right: {
-        backgroundColor: 'blue',
-        width: '40%',
-        height: 40,
-        borderRadius: 10,
-        justifyContent: "center",
-        textAlign: 'center'
-    },
-    betslip_button: {
-        backgroundColor: 'orange',
-        width: '100%',
+    betslipButton: {
+        backgroundColor: 'rgb(41,139,217)',
+        width: '60%',
         height: 40,
         borderRadius: 10,
         justifyContent: "center",
         textAlign: 'center',
-        position: 'absolute',
-        top: 600
+        top: '1100%',
+        left: '20%',
+        zIndex:100        
+    },
+
+    bottomButton:{
+        color: 'rgb(255,255,255)',
+        backgroundColor: 'rgb(41,139,217)',
+        width: '40%',
+        height: 40,
+        borderRadius: 10,
+        textAlign: 'center',   
+        justifyContent: "center",
     },
     logo: {
         height: 80,

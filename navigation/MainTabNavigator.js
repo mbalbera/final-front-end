@@ -4,18 +4,20 @@ import { createDrawerNavigator, createStackNavigator } from 'react-navigation';
 import DrawerIcon from '../components/DrawerIcon'
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import GameScreen from '../screens/GameScreen';
 import UsersScreen from '../screens/UsersScreen';
 import BetTrackerScreen from '../screens/BetTrackerScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import RulesScreen from '../screens/RulesScreen';
+import GameScreen from '../screens/GameScreen'
+import BetSlipScreen from '../screens/BetSlipScreen'
+import AddFundsScreen from '../screens/AddFundsScreen'
+import SignInScreen from '../screens/SignInScreen'
+import SignUpScreen from '../screens/SignInScreen'
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
   default: {},
 });
-
-
 
 const UserName = createStackNavigator(
   {
@@ -39,6 +41,52 @@ UserName.navigationOptions = {
 };
 
 UserName.path = '';
+
+const Game = createStackNavigator(
+  {
+    Game: GameScreen,
+  },
+  config
+);
+
+Game.navigationOptions = {
+  tabBarLabel: 'Home',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
+Game.path = '';
+
+const BetSlip = createStackNavigator(
+  {
+    BetSlip: BetSlipScreen,
+  },
+  config
+);
+
+BetSlip.navigationOptions = {
+  tabBarLabel: null,
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
+BetSlip.path = '';
 
 const Home = createStackNavigator(
   {
@@ -86,6 +134,32 @@ BetTracker.navigationOptions = {
 
 BetTracker.path = '';
 
+
+const AddFunds = createStackNavigator(
+  {
+    AddFunds: AddFundsScreen
+  },
+  config
+);
+
+AddFunds.navigationOptions = {
+  tabBarLabel: 'Home',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios'
+          ? `ios-information-circle${focused ? '' : '-outline'}`
+          : 'md-information-circle'
+      }
+    />
+  ),
+};
+
+AddFunds.path = '';
+
+
+
 const Rules = createStackNavigator(
   {
     Rules: RulesScreen,
@@ -108,22 +182,6 @@ Rules.navigationOptions = {
 };
 
 Rules.path = '';
-
-// const Game = createStackNavigator(
-//   {
-//     Game: GameScreen,
-//   },
-//   config
-// );
-
-// Game.navigationOptions = {
-//   tabBarLabel: 'Home',
-//   tabBarIcon: ({ focused }) => (
-//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-//   ),
-// };
-
-// Game.path = '';
 
 const Settings = createStackNavigator(
   {
@@ -151,9 +209,12 @@ Settings.path = '';
 const mainDrawer = createDrawerNavigator({
   Home,
   UserName,
-  BetTracker,
+  AddFunds,
   Settings,
-  Rules
+  Rules,
+  Game,
+  // BetTracker,
+  
 })
 mainDrawer.path = '';
 
