@@ -19,8 +19,6 @@ const config = Platform.select({
   default: {},
 });
 
-
-
 const UserName = createStackNavigator(
   {
     UserName: UsersScreen,
@@ -215,7 +213,6 @@ const mainDrawer = createDrawerNavigator({
   Settings,
   Rules,
   Game,
-  // BetSlip,
   // BetTracker,
   
 })
